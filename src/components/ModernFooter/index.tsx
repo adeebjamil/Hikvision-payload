@@ -82,9 +82,9 @@ export default function ModernFooter({
   }
 
   return (
-    <footer className="bg-black text-white">
+    <footer className="bg-white text-gray-800 shadow-[0_-10px_60px_-15px_rgba(0,0,0,0.1)]">
       {/* Main Footer */}
-      <div className="container mx-auto px-4 pt-12 pb-8">
+      <div className="container mx-auto px-4 pt-16 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Logo section */}
           <div>
@@ -103,7 +103,7 @@ export default function ModernFooter({
               )}
             </div>
 
-            <p className="text-gray-400 mb-6">
+            <p className="text-gray-600 mb-8">
               {description}
             </p>
 
@@ -115,7 +115,7 @@ export default function ModernFooter({
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-black border border-red-600 flex items-center justify-center hover:bg-red-600 transition-colors duration-300"
+                  className="w-10 h-10 rounded-full bg-gray-50 shadow-sm flex items-center justify-center hover:bg-red-600 hover:text-white transition-all duration-300 text-red-600"
                 >
                   {getSocialIcon(social.platform)}
                 </a>
@@ -126,18 +126,18 @@ export default function ModernFooter({
           {/* Dynamic columns */}
           {columns.slice(0, 2).map((column, index) => (
             <div key={index}>
-              <h3 className="text-lg font-bold mb-6 relative">
+              <h3 className="text-lg font-bold text-gray-900 mb-6 relative pb-2">
                 {column.title}
-                <span className="absolute left-0 bottom-0 w-12 h-0.5 bg-red-600"></span>
+                <span className="absolute left-0 bottom-0 w-16 h-0.5 bg-red-600"></span>
               </h3>
               <ul className="space-y-3">
                 {column.links.map((link, i) => (
                   <li key={i}>
                     <Link 
                       href={link.url}
-                      className="text-gray-400 hover:text-red-500 transition-colors duration-300 flex items-center"
+                      className="text-gray-600 hover:text-red-600 transition-colors duration-300 flex items-center"
                     >
-                      <svg className="w-3 h-3 mr-2 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                      <svg className="w-3 h-3 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                       </svg>
                       {link.label}
@@ -149,55 +149,58 @@ export default function ModernFooter({
           ))}
 
           {/* Contact Us */}
-          <div>
-            <h3 className="text-lg font-bold mb-6 relative">
+          <div className="relative">
+            {/* Decorative element */}
+            <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-red-50 opacity-50"></div>
+            
+            <h3 className="text-lg font-bold text-gray-900 mb-6 relative pb-2">
               Contact Us
-              <span className="absolute left-0 bottom-0 w-12 h-0.5 bg-red-600"></span>
+              <span className="absolute left-0 bottom-0 w-16 h-0.5 bg-red-600"></span>
             </h3>
             
-            <div className="space-y-4">
+            <div className="space-y-4 relative z-10">
               {contactInfo?.address && (
                 <div className="flex items-start">
-                  <div className="mt-1 mr-4 w-10 h-10 rounded-full border border-red-600 flex items-center justify-center flex-shrink-0">
+                  <div className="mt-1 mr-4 w-10 h-10 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-600" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <span className="text-gray-300">{contactInfo.address}</span>
+                  <span className="text-gray-700">{contactInfo.address}</span>
                 </div>
               )}
               
               {contactInfo?.phone && (
                 <div className="flex items-center">
-                  <div className="mr-4 w-10 h-10 rounded-full border border-red-600 flex items-center justify-center flex-shrink-0">
+                  <div className="mr-4 w-10 h-10 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-600" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                     </svg>
                   </div>
-                  <span className="text-gray-300">{contactInfo.phone}</span>
+                  <span className="text-gray-700">{contactInfo.phone}</span>
                 </div>
               )}
               
               {contactInfo?.email && (
                 <div className="flex items-center">
-                  <div className="mr-4 w-10 h-10 rounded-full border border-red-600 flex items-center justify-center flex-shrink-0">
+                  <div className="mr-4 w-10 h-10 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-600" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
                   </div>
-                  <span className="text-gray-300">{contactInfo.email}</span>
+                  <span className="text-gray-700">{contactInfo.email}</span>
                 </div>
               )}
               
               {contactInfo?.workingHours && (
                 <div className="flex items-center">
-                  <div className="mr-4 w-10 h-10 rounded-full border border-red-600 flex items-center justify-center flex-shrink-0">
+                  <div className="mr-4 w-10 h-10 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-600" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <span className="text-gray-300">{contactInfo.workingHours}</span>
+                  <span className="text-gray-700">{contactInfo.workingHours}</span>
                 </div>
               )}
             </div>
@@ -205,7 +208,7 @@ export default function ModernFooter({
             {/* CTA Button */}
             <a
               href="/contact"
-              className="inline-block mt-8 px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md transition-colors duration-300"
+              className="inline-block mt-8 px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md transition-colors duration-300 shadow-lg hover:shadow-xl hover:translate-y-[-2px] active:translate-y-0"
             >
               Get Quote
             </a>
@@ -214,48 +217,54 @@ export default function ModernFooter({
       </div>
 
       {/* Certification section */}
-      <div className="border-t border-gray-900">
-        <div className="container mx-auto px-4 py-6">
+      <div className="bg-gray-50 py-8 border-t border-gray-100">
+        <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-8 md:gap-16">
-            <div className="flex items-center text-gray-400">
-              <svg className="w-5 h-5 mr-2 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              ISO 9001:2015 Certified
+            <div className="flex items-center text-gray-700 group">
+              <div className="mr-3 p-2 rounded-full bg-white shadow-sm group-hover:bg-red-50 transition-colors duration-300">
+                <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <span className="font-medium">ISO 9001:2015 Certified</span>
             </div>
             
-            <div className="flex items-center text-gray-400">
-              <svg className="w-5 h-5 mr-2 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-              </svg>
-              24/7 Monitoring
+            <div className="flex items-center text-gray-700 group">
+              <div className="mr-3 p-2 rounded-full bg-white shadow-sm group-hover:bg-red-50 transition-colors duration-300">
+                <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                  <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <span className="font-medium">24/7 Monitoring</span>
             </div>
             
-            <div className="flex items-center text-gray-400">
-              <svg className="w-5 h-5 mr-2 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              5-Year Warranty
+            <div className="flex items-center text-gray-700 group">
+              <div className="mr-3 p-2 rounded-full bg-white shadow-sm group-hover:bg-red-50 transition-colors duration-300">
+                <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <span className="font-medium">5-Year Warranty</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Copyright section */}
-      <div className="bg-[#0a0e17] py-5">
+      <div className="bg-white py-5 border-t border-gray-100">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="text-gray-500 text-sm mb-4 md:mb-0">
+            <div className="text-gray-600 text-sm mb-4 md:mb-0">
               {copyrightText}
             </div>
             
-            <div className="flex space-x-6">
+            <div className="flex flex-wrap justify-center gap-6">
               {navLinks.map((link, index) => (
                 <Link 
                   key={index} 
                   href={link.url}
-                  className="text-gray-500 text-sm hover:text-red-600 transition-colors duration-300"
+                  className="text-gray-600 text-sm hover:text-red-600 transition-colors duration-300"
                 >
                   {link.label}
                 </Link>

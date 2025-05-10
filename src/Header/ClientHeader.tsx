@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { Search, ChevronDown, Menu, X } from 'lucide-react'
+import { Search, ChevronDown, Menu, X, ShoppingCart, User, Phone, Mail, ChevronRight, Sun, Moon } from 'lucide-react'
 import { Logo } from '@/components/Logo/Logo'
+import { AnimatePresence, motion } from 'framer-motion'
 
-// Update NavItem type to support three levels of categories
-type NavItem = {
+// Update NavItem type to support three levels of categories and add icon field
+export type NavItem = {
   url?: string;
   label?: string;
   id?: string;
@@ -14,14 +15,17 @@ type NavItem = {
     name: string;
     url: string;
     id?: string;
+    icon?: string; // Add icon field
     subcategories?: Array<{
       name: string;
       url: string;
       id?: string;
+      icon?: string; // Add icon field
       tertiaryCategories?: Array<{  // New third level
         name: string;
         url: string;
         id?: string;
+        icon?: string; // Add icon field
       }>;
     }>;
   }>;
@@ -84,15 +88,66 @@ const SocialIcon = ({ platform, className = "h-5 w-5" }: { platform?: string; cl
   }
 };
 
+// Category icon component for rendering different icons
+const CategoryIcon = ({ iconName, className = "w-5 h-5 mr-3" }: { iconName?: string; className?: string }) => {
+  switch (iconName?.toLowerCase()) {
+    case 'camera':
+    case 'cameras':
+      return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>;
+    case 'recorder':
+    case 'recorders':
+    case 'nvr':
+    case 'dvr':
+      return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4"/><path d="M14 12h4"/></svg>;
+    case 'software':
+      return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>;
+    case 'alarm':
+    case 'alarms':
+      return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>;
+    case 'access':
+    case 'access control':
+      return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>;
+    case 'network':
+    case 'networking':
+      return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="10" x2="6" y2="14"/><line x1="18" y1="10" x2="18" y2="14"/></svg>;
+    case 'storage':
+      return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 6v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6"/><path d="M18 6V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2"/><line x1="12" y1="10" x2="12" y2="16"/><line x1="9" y1="13" x2="15" y2="13"/></svg>;
+    default:
+      // Default icon for all categories
+      return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><path d="m16 10-4 4-4-4"/></svg>;
+  }
+};
+
 export default function ClientHeader({ navItems = [], socialLinks = [], logoUrl }: ClientHeaderProps) {
   const [mounted, setMounted] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [searchValue, setSearchValue] = useState('')
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [cartCount, setCartCount] = useState(2) // Example cart count
+  const [darkMode, setDarkMode] = useState(false) // Dark mode state
+  
+  const headerRef = useRef<HTMLElement>(null)
+  
+  // Handle scroll events for sticky header
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY
+      setIsScrolled(scrollPosition > 50)
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
   
   useEffect(() => {
     setMounted(true)
   }, [])
+  
+  const toggleTheme = () => {
+    setDarkMode(prev => !prev)
+    // Apply dark mode class if you implement it later
+  }
   
   if (!mounted) {
     return (
@@ -103,9 +158,15 @@ export default function ClientHeader({ navItems = [], socialLinks = [], logoUrl 
   }
   
   return (
-    <header className="w-full bg-white shadow-md z-50" suppressHydrationWarning>
-      {/* Top Bar with social links */}
-      <div className=" bg-black         text-white">
+    <header 
+      ref={headerRef}
+      className={`w-full bg-white z-50 fixed top-0 left-0 right-0 transition-all duration-300
+      ${isScrolled ? 'shadow-lg' : 'shadow-sm'}`} 
+      suppressHydrationWarning
+    >
+      {/* Top Bar with social links - only visible when not scrolled */}
+      <div className={`bg-gradient-to-r from-gray-900 to-black text-white transition-all duration-300 overflow-hidden
+        ${isScrolled ? 'h-0 opacity-0' : 'h-auto opacity-100'}`}>
         <div className="container mx-auto px-4 py-2 flex flex-col md:flex-row justify-between items-center">
           {/* Social Icons - From CMS */}
           <div className="flex space-x-4 mb-2 md:mb-0">
@@ -116,7 +177,7 @@ export default function ClientHeader({ navItems = [], socialLinks = [], logoUrl 
                   href={social.url || '#'} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="hover:text-gray-200 transition"
+                  className="hover:text-red-400 transition transform hover:scale-110"
                 >
                   <SocialIcon platform={social.platform} />
                 </a>
@@ -124,45 +185,37 @@ export default function ClientHeader({ navItems = [], socialLinks = [], logoUrl 
             ) : (
               // Fallback icons if none provided from CMS
               <>
-                <a href="#" className="hover:text-gray-200 transition">
+                <a href="#" className="hover:text-red-400 transition transform hover:scale-110">
                   <SocialIcon platform="facebook" />
                 </a>
-                <a href="#" className="hover:text-gray-200 transition">
+                <a href="#" className="hover:text-red-400 transition transform hover:scale-110">
                   <SocialIcon platform="twitter" />
                 </a>
-                <a href="#" className="hover:text-gray-200 transition">
+                <a href="#" className="hover:text-red-400 transition transform hover:scale-110">
                   <SocialIcon platform="youtube" />
                 </a>
-                <a href="#" className="hover:text-gray-200 transition">
+                <a href="#" className="hover:text-red-400 transition transform hover:scale-110">
                   <SocialIcon platform="linkedin" />
                 </a>
-                <a href="#" className="hover:text-gray-200 transition">
+                <a href="#" className="hover:text-red-400 transition transform hover:scale-110">
                   <SocialIcon platform="instagram" />
                 </a>
               </>
             )}
           </div>
           
-          {/* Logo (Centered) */}
-          <Link href="/" className="hidden md:block flex-shrink-0 mx-4">
-            <Logo 
-              image={logoUrl || ''} 
-              className="h-10 w-auto"
-            />
-          </Link>
-          
           {/* Contact Info */}
           <div className="flex flex-col md:flex-row md:space-x-6 text-sm">
-            <a href="tel:+971509893134" className="flex items-center mb-1 md:mb-0 hover:text-gray-200 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
+            <a href="tel:+971509893134" className="flex items-center mb-1 md:mb-0 hover:text-red-400 transition group">
+              <div className="bg-red-700 p-1 rounded-full mr-2 group-hover:bg-red-500 transition-colors">
+                <Phone size={14} />
+              </div>
               <span>+971 50 989 3134</span>
             </a>
-            <a href="mailto:sales@hikvision-uae.ae" className="flex items-center hover:text-gray-200 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
+            <a href="mailto:sales@hikvision-uae.ae" className="flex items-center hover:text-red-400 transition group">
+              <div className="bg-red-700 p-1 rounded-full mr-2 group-hover:bg-red-500 transition-colors">
+                <Mail size={14} />
+              </div>
               <span>sales@hikvision-uae.ae</span>
             </a>
           </div>
@@ -170,11 +223,19 @@ export default function ClientHeader({ navItems = [], socialLinks = [], logoUrl 
       </div>
       
       {/* Main Header */}
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex justify-between items-center">
-          {/* Left Side Navigation with Dropdown Support */}
-          <nav className="hidden md:flex items-center">
-            <ul className="flex space-x-8 font-medium">
+      <div className={`bg-white transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
+        <div className="container mx-auto px-4 flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex-shrink-0">
+            <Logo 
+              image={logoUrl || ''} 
+              className={`transition-all duration-300 ${isScrolled ? 'h-10' : 'h-12'} w-auto`}
+            />
+          </Link>
+
+          {/* Middle Navigation with Dropdown Support */}
+          <nav className="hidden xl:flex items-center justify-center flex-1 mx-8">
+            <ul className="flex space-x-6 font-medium">
               {/* Only render nav items from CMS */}
               {navItems && navItems.length > 0 ? (
                 navItems.map((item, i) => {
@@ -191,88 +252,101 @@ export default function ClientHeader({ navItems = [], socialLinks = [], logoUrl 
                     >
                       <Link 
                         href={hasCategories ? '#' : url}
-                        className="text-lg !text-black font-semibold transition-all duration-300 py-2 px-3 
-                        border-b-2 border-transparent hover:border-red-800 hover:text-red-800 
-                        flex items-center"
-                        style={{color: '#000', fontWeight: 600}}
+                        className="text-[15px] font-medium transition-all duration-300
+                        hover:text-red-600 flex items-center py-2 px-1 relative"
+                        style={{ color: '#1f2937' }} // Explicit color style (gray-800)
+                        onClick={(e) => hasCategories && e.preventDefault()}
                       >
                         {label}
                         {hasCategories && (
-                          <ChevronDown size={16} className="ml-1 transition-transform duration-300 group-hover:rotate-180" />
+                          <ChevronDown 
+                            size={16} 
+                            className="ml-1 transition-transform duration-300 group-hover:rotate-180" 
+                          />
                         )}
+                        <span className="absolute bottom-0 left-0 h-0.5 bg-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                       </Link>
                       
-                      {/* Dropdown Menu - Updated with subcategories */}
+                      {/* Hikvision-Style Dropdown Menu */}
                       {hasCategories && (
                         <div 
-                          className={`absolute top-full left-0 w-64 bg-white shadow-lg py-2 mt-1 z-50 border-t-2 border-red-800
-                          transition-all duration-300 ${activeDropdown === (item.id || `nav-${i}`) ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+                          className={`absolute top-full left-0 bg-white shadow-md border border-gray-100 z-50
+                          transition-all duration-200 min-w-[280px] py-1
+                          ${activeDropdown === (item.id || `nav-${i}`) ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
                         >
                           {item.categories?.map((category, idx) => {
                             const hasSubcategories = category.subcategories && category.subcategories.length > 0;
+                            const categoryName = category.name?.toLowerCase() || '';
                             
                             return (
                               <div key={category.id || idx} className="relative group/subcategory">
                                 <Link 
                                   href={hasSubcategories ? '#' : category.url}
-                                  className="flex items-center justify-between px-6 py-3 text-black font-medium hover:bg-red-50 hover:text-red-800 
-                                    transition-colors border-l-4 border-transparent hover:border-red-800 w-full"
-                                  style={{color: '#000'}}
+                                  className="flex items-center justify-between px-5 py-3 text-gray-800 hover:text-red-600 hover:bg-gray-50
+                                    transition-colors w-full border-b border-gray-50 last:border-b-0"
+                                  style={{color: '#333'}} 
                                   onClick={(e) => hasSubcategories && e.preventDefault()}
                                 >
-                                  <span>{category.name}</span>
+                                  <div className="flex items-center">
+                                    <CategoryIcon iconName={category.icon || categoryName} className="w-5 h-5 mr-3 text-gray-500" />
+                                    <span className="text-current font-normal">{category.name}</span>
+                                  </div>
                                   {hasSubcategories && (
-                                    <ChevronDown size={14} className="ml-1 transform -rotate-90 transition-transform duration-300 group-hover/subcategory:rotate-0" />
+                                    <ChevronRight size={14} className="text-gray-400" />
                                   )}
                                 </Link>
                                 
-                                {/* Subcategories dropdown */}
+                                {/* Subcategories dropdown - Hikvision style with icons */}
                                 {hasSubcategories && (
-                                  <div className="absolute top-0 left-full bg-white w-64 shadow-lg py-2 
+                                  <div className="absolute top-0 left-full bg-white shadow-md border border-gray-100
                                     opacity-0 invisible group-hover/subcategory:opacity-100 group-hover/subcategory:visible
-                                    transition-all duration-300 border-l-2 border-red-800">
+                                    transition-all duration-200 min-w-[280px]">
                                     {category.subcategories?.map((subcategory, subIdx) => {
-                                      // Check if there are tertiary categories
                                       const hasTertiaryCategories = subcategory.tertiaryCategories && 
                                         subcategory.tertiaryCategories.length > 0;
+                                      const subcategoryName = subcategory.name?.toLowerCase() || '';
                                       
                                       return (
                                         <div key={subcategory.id || subIdx} className="relative group/tertiary">
                                           <Link
                                             href={hasTertiaryCategories ? '#' : subcategory.url}
-                                            className="flex items-center justify-between px-6 py-2.5 text-black font-medium 
-                                              hover:bg-red-50 hover:text-red-800 transition-colors 
-                                              border-l-4 border-transparent hover:border-red-800 w-full"
-                                            style={{color: '#000'}}
+                                            className="flex items-center justify-between px-5 py-3 text-gray-800 hover:text-red-600 hover:bg-gray-50
+                                              transition-colors w-full border-b border-gray-50 last:border-b-0"
+                                            style={{color: '#333'}}  
                                             onClick={(e) => hasTertiaryCategories && e.preventDefault()}
                                           >
-                                            <span>{subcategory.name}</span>
+                                            <div className="flex items-center">
+                                              <CategoryIcon iconName={subcategory.icon || subcategoryName} className="w-4 h-4 mr-3 text-gray-500" />
+                                              <span className="text-current font-normal">{subcategory.name}</span>
+                                            </div>
                                             {hasTertiaryCategories && (
-                                              <ChevronDown 
-                                                size={14} 
-                                                className="ml-1 transform -rotate-90 transition-transform 
-                                                  duration-300 group-hover/tertiary:rotate-0" 
-                                              />
+                                              <ChevronRight size={14} className="text-gray-400" />
                                             )}
                                           </Link>
                                           
-                                          {/* Tertiary categories dropdown - third level */}
+                                          {/* Tertiary categories dropdown - Hikvision style with icons */}
                                           {hasTertiaryCategories && (
-                                            <div className="absolute top-0 left-full bg-white w-64 shadow-lg py-2
+                                            <div className="absolute top-0 left-full bg-white shadow-md border border-gray-100
                                               opacity-0 invisible group-hover/tertiary:opacity-100 group-hover/tertiary:visible
-                                              transition-all duration-300 border-l-2 border-red-800">
-                                              {subcategory.tertiaryCategories?.map((tertiary, tertiaryIdx) => (
-                                                <Link
-                                                  key={tertiary.id || tertiaryIdx}
-                                                  href={tertiary.url}
-                                                  className="block px-6 py-2.5 text-black font-medium 
-                                                    hover:bg-red-50 hover:text-red-800 transition-colors
-                                                    border-l-4 border-transparent hover:border-red-800"
-                                                  style={{color: '#000'}}
-                                                >
-                                                  {tertiary.name}
-                                                </Link>
-                                              ))}
+                                              transition-all duration-200 min-w-[280px]">
+                                              {subcategory.tertiaryCategories?.map((tertiary, tertiaryIdx) => {
+                                                const tertiaryName = tertiary.name?.toLowerCase() || '';
+                                                
+                                                return (
+                                                  <Link
+                                                    key={tertiary.id || tertiaryIdx}
+                                                    href={tertiary.url}
+                                                    className="flex items-center px-5 py-3 text-gray-800 hover:text-red-600 hover:bg-gray-50
+                                                      transition-colors border-b border-gray-50 last:border-b-0"
+                                                    style={{color: '#333'}}
+                                                  >
+                                                    <div className="flex items-center">
+                                                      <CategoryIcon iconName={tertiary.icon || tertiaryName} className="w-4 h-4 mr-3 text-gray-500" />
+                                                      <span className="text-current font-normal">{tertiary.name}</span>
+                                                    </div>
+                                                  </Link>
+                                                );
+                                              })}
                                             </div>
                                           )}
                                         </div>
@@ -290,90 +364,233 @@ export default function ClientHeader({ navItems = [], socialLinks = [], logoUrl 
                 })
               ) : (
                 <li>
-                  <Link href="/" className="text-lg font-semibold py-2 px-3" style={{color: '#000'}}>Home</Link>
+                  <Link 
+                    href="/" 
+                    className="text-[15px] text-gray-800 font-medium hover:text-red-600 transition-all duration-300 py-2 px-1 relative group"
+                  >
+                    Home
+                    <span className="absolute bottom-0 left-0 h-0.5 bg-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                  </Link>
                 </li>
               )}
             </ul>
           </nav>
 
-          {/* Right Side - Enhanced Beautiful Search Bar */}
-          <div className="hidden md:flex flex-none max-w-md ml-auto">
-            <div className="relative w-full group">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none group-hover:text-gray-600 transition-colors">
+          {/* Right Side - Enhanced UI Elements */}
+          <div className="flex items-center space-x-6">
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className="hidden md:flex items-center text-gray-700 hover:text-red-600 transition-colors"
+              aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              <div className="bg-gray-100 p-2 rounded-full hover:bg-red-50 transition-colors">
+                {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+              </div>
+            </button>
+            
+            {/* Search Bar */}
+            <div className="hidden md:block relative group">
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-red-500 transition-colors">
                 <Search size={18} />
               </div>
               <input 
                 type="text" 
-                placeholder="Search For Product" 
+                placeholder="Search products..." 
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
-                className="w-full py-2.5 pl-10 pr-14 border border-gray-300 rounded-full 
-                focus:outline-none focus:ring-2 focus:ring-black/20 focus:border-black
-                shadow-sm hover:shadow-md transition-all duration-300 text-sm font-medium"
+                className="w-[220px] py-2 pl-10 pr-4 border border-gray-300 rounded-full 
+                focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600
+                shadow-sm group-hover:shadow-md transition-all duration-300 text-sm"
               />
-              <button className="absolute right-1 top-1/2 -translate-y-1/2 bg-black text-white 
-                px-4 py-1.5 rounded-full hover:bg-gray-800 transition-all duration-300
-                shadow-sm hover:shadow-md flex items-center justify-center">
-                <span className="mr-1 text-sm font-medium">Search</span>
-                <Search size={16} />
-              </button>
             </div>
+            
+            {/* User Account */}
+            <Link href="/account" className="hidden md:flex items-center text-gray-700 hover:text-red-600 transition-colors">
+              <div className="bg-gray-100 p-2 rounded-full hover:bg-red-50 transition-colors">
+                <User size={20} />
+              </div>
+            </Link>
+            
+            {/* Shopping Cart */}
+            <Link href="/cart" className="hidden md:flex items-center text-gray-700 hover:text-red-600 transition-colors">
+              <div className="bg-gray-100 p-2 rounded-full hover:bg-red-50 transition-colors relative">
+                <ShoppingCart size={20} />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
+            </Link>
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              className="xl:hidden flex items-center text-gray-700 hover:text-red-600 transition-colors"
+            >
+              <div className="bg-gray-100 p-2 rounded-full hover:bg-red-50 transition-colors">
+                {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </div>
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Toggle */}
-      <div className="md:hidden">
-        <button 
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
-          className="text-gray-700 hover:text-red-800 transition"
-        >
-          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
-          {/* Mobile Search */}
-          <div className="p-4 border-b border-gray-200">
-            <div className="relative w-full">
-              <input 
-                type="text" 
-                placeholder="Search For Product" 
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                className="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-l-md focus:outline-none focus:ring-1 focus:ring-red-800 focus:border-red-800"
-              />
-              <button className="absolute right-0 top-0 bottom-0 bg-red-800 text-white px-4 rounded-r-md hover:bg-red-900 transition">
-                <Search size={20} />
-              </button>
+      {/* Mobile Menu - Using AnimatePresence for smooth transitions */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="xl:hidden bg-white border-t border-gray-200 shadow-lg overflow-hidden"
+          >
+            {/* Mobile Search */}
+            <div className="p-4 border-b border-gray-100">
+              <div className="relative w-full">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  <Search size={18} />
+                </div>
+                <input 
+                  type="text" 
+                  placeholder="Search products..." 
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  className="w-full py-2.5 pl-10 pr-3 border border-gray-300 rounded-lg 
+                  focus:outline-none focus:ring-2 focus:ring-red-600/20 focus:border-red-600"
+                />
+              </div>
             </div>
-          </div>
-          
-          {/* Mobile Nav Links - ONLY CMS LINKS */}
-          <nav className="py-2">
-            <ul className="space-y-1">
-              {/* Only render mobile nav items from CMS */}
-              {navItems && navItems.length > 0 && navItems.map((item, i) => {
-                const url = item?.url || '';
-                const label = item?.label || '';
-                
-                return (url && label) ? (
-                  <li key={item.id || i} className="border-t border-gray-100">
-                    <Link 
-                      href={url} 
-                      className="block px-4 py-2 text-black hover:bg-red-800 hover:text-white transition-colors"
+            
+            {/* Mobile Icons - Account & Cart */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-100">
+              <Link href="/account" className="flex items-center space-x-2 text-gray-800">
+                <div className="bg-gray-100 p-2 rounded-full">
+                  <User size={20} />
+                </div>
+                <span>My Account</span>
+              </Link>
+              
+              <Link href="/cart" className="flex items-center space-x-2 text-gray-800">
+                <div className="bg-gray-100 p-2 rounded-full relative">
+                  <ShoppingCart size={20} />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                      {cartCount}
+                    </span>
+                  )}
+                </div>
+                <span>Cart</span>
+              </Link>
+            </div>
+            
+            {/* Mobile Nav Links with Accordion */}
+            <nav className="py-2">
+              <ul className="divide-y divide-gray-100">
+                {/* Only render mobile nav items from CMS */}
+                {navItems && navItems.length > 0 && navItems.map((item, i) => {
+                  const url = item?.url || '';
+                  const label = item?.label || '';
+                  const hasCategories = item?.categories && item.categories.length > 0;
+                  const isActive = activeDropdown === (item.id || `nav-${i}`);
+
+                  return (url && label) ? (
+                    <li key={item.id || i}>
+                      <div 
+                        className="flex items-center justify-between px-4 py-3 cursor-pointer"
+                        onClick={() => hasCategories && setActiveDropdown(isActive ? null : (item.id || `nav-${i}`))}
+                      >
+                        <Link
+                          href={hasCategories ? '#' : url}
+                          className="text-gray-800 font-medium"
+                          onClick={(e) => hasCategories && e.preventDefault()}
+                        >
+                          {label}
+                        </Link>
+                        {hasCategories && (
+                          <ChevronDown 
+                            size={18} 
+                            className={`transition-transform duration-300 ${isActive ? 'rotate-180' : ''}`} 
+                          />
+                        )}
+                      </div>
+
+                      {/* Mobile submenu */}
+                      {hasCategories && (
+                        <motion.div
+                          initial={false}
+                          animate={{ height: isActive ? 'auto' : 0, opacity: isActive ? 1 : 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden bg-gray-50"
+                        >
+                          {item.categories?.map((category, idx) => (
+                            <Link
+                              key={category.id || idx}
+                              href={category.url}
+                              className="block px-6 py-2 text-gray-700 hover:text-red-600 hover:bg-gray-100 transition-colors"
+                            >
+                              {category.name}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </li>
+                  ) : null;
+                })}
+              </ul>
+            </nav>
+
+            {/* Contact Info in Mobile Menu */}
+            <div className="bg-gray-50 p-4">
+              <div className="flex flex-col space-y-3">
+                <a href="tel:+971509893134" className="flex items-center text-gray-700 hover:text-red-600 transition-colors">
+                  <Phone size={16} className="mr-2" />
+                  <span>+971 50 989 3134</span>
+                </a>
+                <a href="mailto:sales@hikvision-uae.ae" className="flex items-center text-gray-700 hover:text-red-600 transition-colors">
+                  <Mail size={16} className="mr-2" />
+                  <span>sales@hikvision-uae.ae</span>
+                </a>
+              </div>
+              
+              {/* Social Icons in Mobile Menu */}
+              <div className="flex space-x-4 mt-4">
+                {socialLinks && socialLinks.length > 0 ? (
+                  socialLinks.map((social, index) => (
+                    <a 
+                      key={index}
+                      href={social.url || '#'} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="bg-gray-200 p-2 rounded-full hover:bg-red-600 hover:text-white transition-colors"
                     >
-                      {label}
-                    </Link>
-                  </li>
-                ) : null;
-              })}
-            </ul>
-          </nav>
-        </div>
-      )}
+                      <SocialIcon platform={social.platform} className="h-4 w-4" />
+                    </a>
+                  ))
+                ) : (
+                  <>
+                    <a href="#" className="bg-gray-200 p-2 rounded-full hover:bg-red-600 hover:text-white transition-colors">
+                      <SocialIcon platform="facebook" className="h-4 w-4" />
+                    </a>
+                    <a href="#" className="bg-gray-200 p-2 rounded-full hover:bg-red-600 hover:text-white transition-colors">
+                      <SocialIcon platform="twitter" className="h-4 w-4" />
+                    </a>
+                    <a href="#" className="bg-gray-200 p-2 rounded-full hover:bg-red-600 hover:text-white transition-colors">
+                      <SocialIcon platform="instagram" className="h-4 w-4" />
+                    </a>
+                  </>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Spacer to compensate for fixed header height */}
+      <div className={`h-[${isScrolled ? '56px' : '124px'}] transition-all duration-300`}></div>
     </header>
   )
 }

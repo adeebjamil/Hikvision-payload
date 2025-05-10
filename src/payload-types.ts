@@ -76,6 +76,8 @@ export interface Config {
     galleryCategories: GalleryCategory;
     faqs: Faq;
     'best-products': BestProduct;
+    inquiries: Inquiry;
+    'contact-submissions': ContactSubmission;
     redirects: Redirect;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +94,8 @@ export interface Config {
     galleryCategories: GalleryCategoriesSelect<false> | GalleryCategoriesSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
     'best-products': BestProductsSelect<false> | BestProductsSelect<true>;
+    inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
+    'contact-submissions': ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -193,17 +197,165 @@ export interface Product {
   title: string;
   heroImage: string | Media;
   /**
+   * Add multiple product images for the gallery view
+   */
+  productImages?:
+    | {
+        image: string | Media;
+        alt: string;
+        id?: string | null;
+      }[]
+    | null;
+  isNew?: boolean | null;
+  /**
+   * Secondary title/description like "2 MP AcuSense Fixed Cube Network Camera"
+   */
+  subtitle?: string | null;
+  /**
    * This will be used for the product URL
    */
   slug: string;
+  /**
+   * Select the main product category
+   */
+  mainCategory: 'network-products' | 'turbo-hd-products' | 'access-control' | 'display-and-control' | 'solution';
+  /**
+   * Select the specific product type
+   */
+  productType?:
+    | (
+        | 'network-camera'
+        | 'ptz-camera'
+        | 'nvr'
+        | 'turbo-hd-cameras'
+        | 'dvr'
+        | 'monitors'
+        | 'digital-signage'
+        | 'controllers'
+        | 'lcd-video-walls'
+        | 'led-displays'
+        | 'access-controllers'
+        | 'visitors-terminals'
+        | 'electrical-locks'
+        | 'face-recognition-terminal'
+        | 'readers'
+        | 'kits'
+        | 'card-terminals'
+        | 'fingerprint-terminals'
+      )
+    | null;
+  /**
+   * Select the product series
+   */
+  series?:
+    | (
+        | 'value-series'
+        | 'turbo-hd-cameras-with-colorvu'
+        | 'pro-series'
+        | 'webcam-series'
+        | 'iot-series'
+        | 'audio-video-collaboration-solution'
+        | 'ultra-series'
+        | 'easy-series'
+        | 'special-series'
+        | 'covert-series'
+        | 'mobile-series'
+        | 'positioning-system'
+        | 'pro-ptz'
+        | 'ultra-ptz'
+        | 'pro-nvr'
+        | 'ultra-nvr'
+        | 'value-nvr'
+        | 'standard-series'
+        | 'advanced-series'
+        | 'premium-series'
+        | 'enterprise-series'
+        | 'budget-series'
+      )
+    | null;
   categories: string | Category;
+  /**
+   * A short one-line description (max 200 chars)
+   */
+  shortDescription: string;
+  /**
+   * Select feature icons to display on product page
+   */
+  featureIcons?:
+    | {
+        iconType:
+          | 'pir'
+          | 'sd-card'
+          | 'h265'
+          | 'audio'
+          | 'wdr'
+          | 'vehicle'
+          | '4k'
+          | 'night-vision'
+          | 'ai'
+          | 'waterproof';
+        /**
+         * Optional: Upload a custom icon instead of using a predefined one
+         */
+        customIcon?: (string | null) | Media;
+        /**
+         * Optional: Override the default label for this icon
+         */
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   meta?: {
     title?: string | null;
+    description?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (string | null) | Media;
-    description?: string | null;
+  };
+  details?: {
+    features?:
+      | {
+          feature: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Add specifications by category
+     */
+    specifications?:
+      | {
+          /**
+           * Specification category (e.g., Camera, Lens, Video)
+           */
+          category: string;
+          specs?:
+            | {
+                name: string;
+                /**
+                 * Can include detailed formatted specifications
+                 */
+                value: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                };
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -291,6 +443,38 @@ export interface BestProduct {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiries".
+ */
+export interface Inquiry {
+  id: string;
+  name: string;
+  mobile: string;
+  email: string;
+  product?: string | null;
+  message?: string | null;
+  status?: ('new' | 'contacted' | 'closed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-submissions".
+ */
+export interface ContactSubmission {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string | null;
+  subject: string;
+  message: string;
+  department?: ('sales' | 'support') | null;
+  status?: ('new' | 'in-progress' | 'completed') | null;
+  submitDate?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -352,6 +536,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'best-products';
         value: string | BestProduct;
+      } | null)
+    | ({
+        relationTo: 'inquiries';
+        value: string | Inquiry;
+      } | null)
+    | ({
+        relationTo: 'contact-submissions';
+        value: string | ContactSubmission;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -449,14 +641,58 @@ export interface ServicepageSelect<T extends boolean = true> {
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
+  productImages?:
+    | T
+    | {
+        image?: T;
+        alt?: T;
+        id?: T;
+      };
+  isNew?: T;
+  subtitle?: T;
   slug?: T;
+  mainCategory?: T;
+  productType?: T;
+  series?: T;
   categories?: T;
+  shortDescription?: T;
+  featureIcons?:
+    | T
+    | {
+        iconType?: T;
+        customIcon?: T;
+        label?: T;
+        id?: T;
+      };
   meta?:
     | T
     | {
         title?: T;
-        image?: T;
         description?: T;
+        image?: T;
+      };
+  details?:
+    | T
+    | {
+        features?:
+          | T
+          | {
+              feature?: T;
+              id?: T;
+            };
+        specifications?:
+          | T
+          | {
+              category?: T;
+              specs?:
+                | T
+                | {
+                    name?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -516,6 +752,36 @@ export interface BestProductsSelect<T extends boolean = true> {
   ribbonText?: T;
   description?: T;
   order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiries_select".
+ */
+export interface InquiriesSelect<T extends boolean = true> {
+  name?: T;
+  mobile?: T;
+  email?: T;
+  product?: T;
+  message?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-submissions_select".
+ */
+export interface ContactSubmissionsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  subject?: T;
+  message?: T;
+  department?: T;
+  status?: T;
+  submitDate?: T;
   updatedAt?: T;
   createdAt?: T;
 }

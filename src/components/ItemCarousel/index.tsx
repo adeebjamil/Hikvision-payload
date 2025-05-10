@@ -1,24 +1,29 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Share2, Heart } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 
 // Simplified interface - direct image field instead of heroImage
 interface Item {
   id?: string
   title: string
+  description?: string
+  url?: string
   image: {
     id?: string
     filename?: string
     url?: string
   }
+  isNew?: boolean
 }
 
-export default function ItemCarousel({ items = [] }: { items: Item[] }) {
+export default function ItemCarousel({ items = [], title = "Hikvision Solutions" }: { items: Item[], title?: string }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [itemsPerView, setItemsPerView] = useState(3)
-  
+  const [likedItems, setLikedItems] = useState<Record<string, boolean>>({});
+
   // Simple responsive handling
   useEffect(() => {
     const handleResize = () => {
@@ -50,13 +55,41 @@ export default function ItemCarousel({ items = [] }: { items: Item[] }) {
       return nextIndex < 0 ? Math.max(0, items.length - itemsPerView) : nextIndex
     })
   }
+
+  const handleLikeClick = (e: React.MouseEvent, itemId: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setLikedItems(prev => ({
+      ...prev,
+      [itemId]: !prev[itemId]
+    }));
+  };
+
+  const handleShareClick = (e: React.MouseEvent, item: Item) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (navigator.share) {
+      navigator.share({
+        title: item.title,
+        text: item.description || `Check out this ${item.title}`,
+        url: window.location.href,
+      }).catch((error) => console.log('Error sharing', error));
+    } else {
+      // Fallback for browsers that don't support Web Share API
+      const url = window.location.href;
+      navigator.clipboard.writeText(url)
+        .then(() => alert('Link copied to clipboard!'))
+        .catch(err => console.error('Could not copy text: ', err));
+    }
+  };
   
   // Show placeholder if no items
   if (!items.length) {
     return (
       <div className="my-16 px-6">
-        <h2 className="text-2xl font-bold text-white mb-6">Security Solutions</h2>
-        <div className="bg-black p-8 text-center rounded-lg border border-gray-800">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">{title}</h2>
+        <div className="bg-gray-100 p-8 text-center rounded-lg border border-gray-200">
           <p className="text-gray-400">No items available</p>
         </div>
       </div>
@@ -70,28 +103,40 @@ export default function ItemCarousel({ items = [] }: { items: Item[] }) {
   )
 
   return (
-    <div className="my-16 py-12 bg-black text-white">
+    <div className="my-16 py-12 bg-white text-gray-800">
       <div className="container mx-auto px-4">
-        {/* Simple header */}
-        <div className="relative mb-10 flex items-center">
-          <div className="flex-1">
-            <div className="flex items-center mb-3">
-              <div className="w-1.5 h-8 bg-red-600 mr-3"></div>
-              <h2 className="text-2xl md:text-3xl font-bold text-white">Security Solutions</h2>
-            </div>
-          </div>
+        
+        {/* Section header with styled title */}
+        <div className="relative mb-10 flex items-center justify-between">
+          <h2 className="text-3xl font-bold flex items-center">
+            {/* Red accent bar */}
+            <span className="w-1.5 h-8 bg-red-600 mr-3 rounded-sm block"></span>
+            
+            {/* Multi-colored title with added gap */}
+            {title === "Hikvision Solutions" ? (
+              <>
+                <span className="text-red-600">Hik</span>
+                <span className="text-gray-500 mr-2">vision</span>
+                <span className="text-black">Solutions</span>
+              </>
+            ) : (
+              title
+            )}
+          </h2>
+          
           <div className="flex space-x-3">
             <button
               onClick={prevItems}
-              className="flex items-center justify-center w-12 h-12 rounded-full bg-black hover:bg-red-600 transition-all duration-300 border border-gray-800"
+              className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 hover:bg-red-600 hover:text-white 
+                transition-all duration-300 border border-gray-200 shadow-sm"
               aria-label="Previous items"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={nextItems}
-              className="flex items-center justify-center w-12 h-12 rounded-full bg-black hover:bg-red-600 transition-all duration-300 border border-gray-800"
-              aria-label="Next items"
+              className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 hover:bg-red-600 hover:text-white 
+                transition-all duration-300 border border-gray-200 shadow-sm"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -110,18 +155,69 @@ export default function ItemCarousel({ items = [] }: { items: Item[] }) {
                   exit={{ opacity: 0, y: 20 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <div className="bg-black rounded-lg overflow-hidden shadow-lg h-full flex flex-col border border-gray-800">
-                    {/* DIRECT IMAGE FIELD ACCESS */}
-                    <div className="relative h-64 bg-black">
-                      {renderImage(item)}
+                  {/* Updated Hikvision card design */}
+                  <div className="h-full flex flex-col rounded border border-red-500 overflow-hidden hover:shadow-md transition-shadow duration-300">
+                    {/* Top image section with light gray background */}
+                    <div className="relative pt-[75%] bg-gray-50">
+                      <img 
+                        src={item.image?.url || '/placeholder-image.jpg'} 
+                        alt={item.title} 
+                        className="absolute inset-0 w-full h-full object-contain p-4"
+                      />
+                      
+                      {/* Vector icons in top right - Camera icon removed */}
+                      <div className="absolute top-4 right-4 flex space-x-2 z-20"> {/* Added z-20 to be above overlay */}
+                        {/* Share icon */}
+                        <button 
+                          className="bg-white p-1.5 rounded-full shadow-sm hover:bg-gray-100 transition-colors"
+                          aria-label="Share product"
+                          onClick={(e) => handleShareClick(e, item)}
+                        >
+                          <Share2 className="w-4 h-4 text-gray-600" />
+                        </button>
+                        
+                        {/* Favorite icon - now with red color when active */}
+                        <button 
+                          className={`${likedItems[item.id || `item-${index}`] 
+                            ? 'bg-red-50' 
+                            : 'bg-white'} p-1.5 rounded-full shadow-sm hover:bg-gray-100 transition-colors`}
+                          aria-label={likedItems[item.id || `item-${index}`] ? "Remove from favorites" : "Add to favorites"}
+                          onClick={(e) => handleLikeClick(e, item.id || `item-${index}`)}
+                        >
+                          <Heart 
+                            className={`w-4 h-4 ${likedItems[item.id || `item-${index}`] 
+                              ? 'text-red-600 fill-red-600' 
+                              : 'text-gray-600'}`} 
+                          />
+                        </button>
+                      </div>
+                      
+                      {/* NEW tag - moved below icons */}
+                      {item.isNew && (
+                        <div className="absolute top-14 right-4">
+                          <span className="text-red-600 text-sm font-bold">NEW</span>
+                        </div>
+                      )}
                     </div>
                     
-                    {/* ITEM TITLE */}
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-white">
-                        {item.title}
-                      </h3>
+                    {/* Bottom section with product details */}
+                    <div className="p-4 flex flex-col flex-grow bg-white">
+                      {/* Product model at bottom */}
+                      <div className="mt-auto">
+                        <p className="text-red-600 font-medium">
+                          {item.title}
+                        </p>
+                      </div>
                     </div>
+                    
+                    {/* Clickable overlay */}
+                    <Link 
+                      href={item.url || '#'}
+                      className="absolute inset-0 z-10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                      aria-label={`View details for ${item.title}`}
+                    >
+                      <span className="sr-only">View details</span>
+                    </Link>
                   </div>
                 </motion.div>
               ))}
@@ -131,52 +227,4 @@ export default function ItemCarousel({ items = [] }: { items: Item[] }) {
       </div>
     </div>
   )
-}
-
-// SIMPLIFIED image rendering function for direct image field access
-function renderImage(item: Item) {
-  // Check if we have image data
-  if (!item.image) {
-    return (
-      <div className="w-full h-full flex items-center justify-center bg-black">
-        <span className="text-gray-500">No image</span>
-      </div>
-    );
-  }
-  
-  // Get image URL - direct from url property or construct from filename
-  let imageUrl = item.image.url;
-  if (!imageUrl && item.image.filename) {
-    imageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}/api/media/${item.image.filename}`;
-  }
-  
-  // Render image with error handling
-  if (imageUrl) {
-    return (
-      <img
-        src={imageUrl}
-        alt={item.title}
-        className="w-full h-full object-cover"
-        onError={(e) => {
-          console.error('Failed to load image:', imageUrl);
-          // Simple fallback - show a placeholder
-          e.currentTarget.style.display = 'none';
-          const parent = e.currentTarget.parentElement;
-          if (parent) {
-            const fallback = document.createElement('div');
-            fallback.className = "w-full h-full flex items-center justify-center bg-black";
-            fallback.innerHTML = '<span class="text-gray-500">Image unavailable</span>';
-            parent.appendChild(fallback);
-          }
-        }}
-      />
-    );
-  }
-  
-  // Fallback
-  return (
-    <div className="w-full h-full flex items-center justify-center bg-black">
-      <span className="text-gray-500">No image URL</span>
-    </div>
-  );
 }

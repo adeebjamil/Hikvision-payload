@@ -5,6 +5,8 @@ import Gallery from '@/components/Gallery'
 import FAQs from '@/components/FAQs'
 import BestProducts from '@/components/BestProducts'
 import { Metadata } from 'next'
+import ServiceGrid from '@/components/ServiceGrid'
+import CCTVShowcase from '@/components/CCTVShowcase'
 
 export const metadata: Metadata = {
   title: 'Hikvision UAE - Home',
@@ -120,16 +122,19 @@ export default async function Page() {
     <div>
       <EnhancedHeroSlider homepage={homepage} />
       <ItemCarousel items={carouselItems} />
-      <BestProducts products={bestProducts} title="Premium Security Solutions" />
+      <BestProducts products={bestProducts} title="Hikvision Premium Security Solutions" />
       <Gallery 
         items={galleryItems} 
         categories={galleryCategories}
-        title="Security Installation Gallery" 
+        title="Hikvision Installation Gallery" 
       />
+      <CCTVShowcase />
       <FAQs 
         items={faqs}
         title="Frequently Asked Questions" 
       />
+      <ServiceGrid />
+      
       {/* Rest of your homepage content */}
     </div>
   )

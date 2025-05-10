@@ -6,6 +6,7 @@ import { Media } from '@/payload-types'
 import { getPayload } from 'payload'
 import ModernFooter from '@/components/ModernFooter'
 import { getFooterData } from '@/utilities/getFooterData'
+import CookieConsent from '@/components/CookieConsent'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -33,7 +34,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <head>{favicon?.url && <link href={favicon.url} rel="icon" sizes="32x32" />}</head>
       <body suppressHydrationWarning>
         <Header />
-        <main>{children}</main>
+        <main>
+          {children}
+          <CookieConsent />
+        </main>
         <ModernFooter {...footerData} />
       </body>
     </html>

@@ -14,6 +14,7 @@ import { Gallery } from './collections/Gallery'
 import { GalleryCategories } from './collections/GalleryCategories'
 import { FAQs } from './collections/FAQs'
 import { BestProducts } from './collections/BestProducts'
+import { Inquiries } from './collections/Inquiries'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { revalidateRedirects } from './hooks/revalidateRedirects'
 import { FooterConfig } from './globals/Footer/config'
@@ -107,6 +108,71 @@ export default buildConfig({
     GalleryCategories,
     FAQs,
     BestProducts,
+    Inquiries,
+    {
+      slug: 'contact-submissions',
+      admin: {
+        useAsTitle: 'name',
+        defaultColumns: ['name', 'email', 'subject', 'status', 'submitDate'],
+      },
+      fields: [
+        {
+          name: 'name',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'email',
+          type: 'email',
+          required: true,
+        },
+        {
+          name: 'phone',
+          type: 'text',
+        },
+        {
+          name: 'subject',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'message',
+          type: 'textarea',
+          required: true,
+        },
+        {
+          name: 'department',
+          type: 'select',
+          options: [
+            { label: 'Sales', value: 'sales' },
+            { label: 'Support', value: 'support' },
+          ],
+        },
+        {
+          name: 'status',
+          type: 'select',
+          defaultValue: 'new',
+          options: [
+            { label: 'New', value: 'new' },
+            { label: 'In Progress', value: 'in-progress' },
+            { label: 'Completed', value: 'completed' },
+          ],
+          admin: {
+            position: 'sidebar',
+          },
+        },
+        {
+          name: 'submitDate',
+          type: 'date',
+          admin: {
+            position: 'sidebar',
+            date: {
+              pickerAppearance: 'dayAndTime',
+            },
+          },
+        },
+      ],
+    },
   ],
   editor: lexicalEditor(),
   globals: [SiteSettings, HomepageGlobal, FooterConfig],
@@ -122,9 +188,23 @@ export default buildConfig({
   }),
   plugins: [
     seoPlugin({
-      collections: ['ServicePage'],
+      collections: ['ServicePage', 'products'], // Add products collection to use SEO
       uploadsCollection: 'media',
-      generateTitle: ({ doc }) => `Lovosis Technology L.L.C — ${doc.title}`,
+      generateTitle: ({ doc }) => `Hikvision UAE — ${doc.title}`,
+      generateDescription: ({ doc }) => {
+        // Try to use shortDescription field first (from your Products collection)
+        if (doc.shortDescription) {
+          return doc.shortDescription.substring(0, 155) + (doc.shortDescription.length > 155 ? '...' : '');
+        }
+        
+        // Fallback to other possible content fields
+        if (doc.description) {
+          return doc.description.substring(0, 155) + (doc.description.length > 155 ? '...' : '');
+        }
+        
+        // Default fallback with product title
+        return `Discover ${doc.title} - Professional security solutions from Hikvision UAE. View specifications, features and more.`;
+      },
       tabbedUI: true,
     }),
     redirectsPlugin({

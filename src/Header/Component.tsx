@@ -1,4 +1,3 @@
-// This should be a server component (no 'use client' directive)
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import ClientHeader from '@/Header/ClientHeader'
