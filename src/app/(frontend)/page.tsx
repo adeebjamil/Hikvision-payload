@@ -3,7 +3,7 @@ import EnhancedHeroSlider from '@/components/slider/enhanced-slider'
 import ItemCarousel from '@/components/ItemCarousel'
 import Gallery from '@/components/Gallery'
 import FAQs from '@/components/FAQs'
-import BestProducts from '@/components/BestProducts'
+// import BestProducts from '@/components/BestProducts'
 import { Metadata } from 'next'
 import ServiceGrid from '@/components/ServiceGrid'
 import CCTVShowcase from '@/components/CCTVShowcase'
@@ -122,7 +122,7 @@ export default async function Page() {
     <div>
       <EnhancedHeroSlider homepage={homepage} />
       <ItemCarousel items={carouselItems} />
-      <BestProducts products={bestProducts} title="Hikvision Premium Security Solutions" />
+      {/* <BestProducts products={bestProducts} title="Hikvision Premium Security Solutions" /> */}
       <Gallery 
         items={galleryItems} 
         categories={galleryCategories}
