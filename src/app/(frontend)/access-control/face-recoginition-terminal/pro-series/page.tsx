@@ -88,7 +88,7 @@ export default async function FaceRecognitionProSeriesPage() {
             <h1 className="text-3xl font-bold">Pro Series Face Recognition Terminals</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's Pro Series Face Recognition Terminals, designed for professional environments requiring 
+            Discover Hikvision&apos;s Pro Series Face Recognition Terminals, designed for professional environments requiring 
             reliable biometric access control. These advanced terminals offer high recognition accuracy, fast processing 
             speeds, and enhanced features like multi-factor authentication and temperature screening. Perfect for corporate 
             offices, healthcare facilities, and commercial buildings.

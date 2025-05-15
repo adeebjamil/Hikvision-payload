@@ -46,7 +46,7 @@ export default function AnimatedHeroSlider({ homepage }: { homepage: Homepage })
   }
 
   return (
-    <section className=" w-full h-full overflow-hidden z-50">
+    <section className="w-full h-full overflow-hidden z-50">
       <AnimatePresence initial={false}>
         <motion.div
           key={currentIndex}
@@ -57,11 +57,9 @@ export default function AnimatedHeroSlider({ homepage }: { homepage: Homepage })
           className="absolute inset-0"
         >
           <img
-            src={slides[currentIndex]!.image.url}
+            src={slides[currentIndex]!.image.url || undefined}
             alt={`slide${slides[currentIndex]!.id}`}
-            fill
-            className="object-cover"
-            priority
+            className="object-cover w-full h-full"
           />
           <div className="absolute inset-0 bg-black bg-opacity-40" />
           <motion.div className="absolute inset-0 flex flex-col items-center justify-center gap-y-64 md:gap-y-0 text-center text-background dark:text-primary p-4">
@@ -87,7 +85,7 @@ export default function AnimatedHeroSlider({ homepage }: { homepage: Homepage })
 
       <button
         onClick={handlePrevious}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-background dark:bg-secondary  bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-all"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-background dark:bg-secondary bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-all"
         aria-label="Previous slide"
       >
         <ChevronLeft className="h-6 w-6 text-black dark:text-muted-foreground" />

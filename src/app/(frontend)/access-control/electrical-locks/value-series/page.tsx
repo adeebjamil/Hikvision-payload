@@ -88,7 +88,7 @@ export default async function ElectricalLocksValueSeriesPage() {
             <h1 className="text-3xl font-bold">Value Series Electrical Locks</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Explore Hikvision's Value Series Electrical Locks, offering affordable yet reliable security solutions for 
+            Explore Hikvision&apos;s Value Series Electrical Locks, offering affordable yet reliable security solutions for 
             doors and gates. These cost-effective locks provide essential access control features with straightforward 
             installation and operation, perfect for residential buildings, small offices, and standard commercial applications.
           </p>

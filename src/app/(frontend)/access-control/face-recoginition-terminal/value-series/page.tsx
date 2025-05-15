@@ -88,7 +88,7 @@ export default async function FaceRecognitionValueSeriesPage() {
             <h1 className="text-3xl font-bold">Value Series Face Recognition Terminals</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Explore Hikvision's Value Series Face Recognition Terminals, offering affordable biometric access control 
+            Explore Hikvision&apos;s Value Series Face Recognition Terminals, offering affordable biometric access control 
             solutions with reliable performance. These cost-effective terminals provide essential face recognition features 
             for small businesses, residential buildings, and standard office environments.
           </p>

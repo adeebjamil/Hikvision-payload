@@ -88,7 +88,7 @@ export default async function CardTerminalsValueSeriesPage() {
             <h1 className="text-3xl font-bold">Value Series Card Terminals</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Explore Hikvision's Value Series Card Terminals, offering cost-effective access control solutions 
+            Explore Hikvision&apos;s Value Series Card Terminals, offering cost-effective access control solutions 
             with reliable performance. These card readers provide essential ID verification features with 
             straightforward installation and operation, ideal for small businesses, residential buildings, 
             and standard security applications.

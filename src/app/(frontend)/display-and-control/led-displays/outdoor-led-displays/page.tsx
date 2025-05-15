@@ -88,7 +88,7 @@ export default async function OutdoorLEDDisplaysPage() {
             <h1 className="text-3xl font-bold">Outdoor LED Displays</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Explore Hikvision's Outdoor LED Display solutions designed to deliver exceptional visual impact in 
+            Explore Hikvision&apos;s Outdoor LED Display solutions designed to deliver exceptional visual impact in 
             outdoor environments. These high-brightness displays feature weather-resistant construction, excellent 
             visibility even in direct sunlight, and durable components for extended operation in various weather 
             conditions. Perfect for advertising, information display, retail storefronts, and public spaces requiring 

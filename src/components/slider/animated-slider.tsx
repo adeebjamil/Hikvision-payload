@@ -95,7 +95,7 @@ export default function AnimatedHeroSlider({ homepage }: { homepage: Homepage })
             </div>
           )}
           
-          {/* Fixed: Add 'position: absolute' to the overlay div */}
+          {/* Fixed: Add position: absolute to the overlay div */}
           <div className="absolute inset-0 bg-black bg-opacity-40" />
           <motion.div className="absolute inset-0 flex flex-col items-center justify-center gap-y-64 md:gap-y-0 text-center text-background dark:text-primary p-4">
             <motion.h1
@@ -118,6 +118,22 @@ export default function AnimatedHeroSlider({ homepage }: { homepage: Homepage })
           </motion.div>
         </motion.div>
       </AnimatePresence>
+
+      {/* Navigation buttons */}
+      <button
+        onClick={handlePrevious}
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-background dark:bg-secondary bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-all"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft className="h-6 w-6 text-black dark:text-muted-foreground" />
+      </button>
+      <button
+        onClick={handleNext}
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-background dark:bg-secondary bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-all"
+        aria-label="Next slide"
+      >
+        <ChevronRight className="h-6 w-6 text-black dark:text-muted-foreground" />
+      </button>
     </section>
   )
 }

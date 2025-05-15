@@ -88,7 +88,7 @@ export default async function FaceProductsKitsPage() {
             <h1 className="text-3xl font-bold">Face Products Kits</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's comprehensive Face Products Kits, providing complete facial recognition solutions 
+            Discover Hikvision&apos;s comprehensive Face Products Kits, providing complete facial recognition solutions 
             in convenient bundled packages. These all-in-one kits include terminals, software, and accessories needed 
             for quick deployment of advanced biometric access control. Perfect for businesses looking for streamlined 
             implementation without the complexity of sourcing individual components.

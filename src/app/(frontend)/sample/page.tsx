@@ -1,7 +1,6 @@
 import { getPayload } from 'payload'
-import configPromise from '@payload-config'
+import configPromise from '@/payload.config'
 import { PageRange } from '@/components/PageRange'
-
 import FilterComponent from '@/components/FilterComponent/filter'
 import { CollectionProducts } from '@/components/CollectionProducts'
 
@@ -10,7 +9,7 @@ type Media = {
   alt?: string
 }
 
-export default async function prodcuts() {
+export default async function products() {
   const payload = await getPayload({ config: configPromise })
 
   const products = await payload.find({

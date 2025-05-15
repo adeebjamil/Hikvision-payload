@@ -88,10 +88,10 @@ export default async function DigitalSignageProSeriesPage() {
             <h1 className="text-3xl font-bold">Pro Series Digital Signage</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's Pro Series Digital Signage, designed for professional commercial environments requiring 
+            Discover Hikvision&apos;s Pro Series Digital Signage, designed for professional commercial environments requiring 
             high-impact visual communications. These advanced displays offer superior brightness, clarity, and durability 
             for extended operation in various lighting conditions. With integrated content management capabilities and 
-            network connectivity, they're perfect for retail stores, corporate lobbies, hospitality venues, and other 
+            network connectivity, they&apos;re perfect for retail stores, corporate lobbies, hospitality venues, and other 
             commercial spaces needing impactful digital messaging solutions.
           </p>
         </div>

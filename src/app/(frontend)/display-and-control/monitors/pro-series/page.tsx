@@ -20,7 +20,7 @@ interface Product {
 
 export const metadata = {
   title: 'Pro Series Monitors | Hikvision UAE',
-  description: 'Professional-grade security monitors with advanced display technology for surveillance command centers and control rooms',
+  description: 'Professional-grade display monitors with advanced features for surveillance and security applications',
 };
 
 async function fetchMonitorsProSeriesProducts() {
@@ -71,7 +71,7 @@ async function fetchMonitorsProSeriesProducts() {
     
     return products;
   } catch (error) {
-    console.error('Error fetching Monitor Pro Series products:', error);
+    console.error('Error fetching Monitors Pro Series products:', error);
     return [];
   }
 }
@@ -88,10 +88,11 @@ export default async function MonitorsProSeriesPage() {
             <h1 className="text-3xl font-bold">Pro Series Monitors</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's Pro Series Monitors, specifically designed for security professionals and control room environments.
-            These high-performance displays offer exceptional image quality, extended operation time, and specialized features like
-            multi-window viewing and low blue light technology. Ideal for surveillance command centers, security monitoring stations,
-            and professional environments requiring reliable visual displays.
+            Discover Hikvision&apos;s Pro Series Monitors, designed for professional security and surveillance applications. 
+            These high-performance displays feature superior image quality, color accuracy, and extended viewing angles 
+            for critical monitoring environments. With 24/7 operation capability, specialized security features, and 
+            robust construction, they&apos;re ideal for control rooms, security operations centers, and professional 
+            monitoring stations where reliability and visual precision are essential.
           </p>
         </div>
         

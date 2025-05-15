@@ -88,7 +88,7 @@ export default async function ElectricalLocksProSeriesPage() {
             <h1 className="text-3xl font-bold">Pro Series Electrical Locks</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's Pro Series Electrical Locks, designed for high-security environments and professional 
+            Discover Hikvision&apos;s Pro Series Electrical Locks, designed for high-security environments and professional 
             installations. These advanced locking solutions offer tamper resistance, durability, and seamless integration 
             with access control systems. Ideal for corporate facilities, government buildings, and other locations requiring 
             enhanced security measures.

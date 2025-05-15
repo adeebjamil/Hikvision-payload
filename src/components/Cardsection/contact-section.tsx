@@ -85,7 +85,7 @@ export default function ContactSection() {
 
                 <motion.div variants={inputVariants} initial="hidden" animate="visible" custom={2}>
                   <Textarea
-                    onChange={(e) => setMessage(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value)}
                     placeholder="Your Message"
                     rows={4}
                   />

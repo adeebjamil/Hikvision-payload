@@ -88,7 +88,7 @@ export default async function ReadersProSeriesPage() {
             <h1 className="text-3xl font-bold">Pro Series Access Control Readers</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's Pro Series Access Control Readers designed for professional security installations.
+            Discover Hikvision&apos;s Pro Series Access Control Readers designed for professional security installations.
             These advanced readers support multiple card technologies, offer enhanced encryption, and seamless 
             integration with access control systems. Perfect for corporate environments, government facilities,
             and locations requiring sophisticated access management.

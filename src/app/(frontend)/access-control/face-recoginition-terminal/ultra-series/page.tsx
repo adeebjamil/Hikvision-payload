@@ -88,7 +88,7 @@ export default async function FaceRecognitionUltraSeriesPage() {
             <h1 className="text-3xl font-bold">Ultra Series Face Recognition Terminals</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Experience unmatched performance with Hikvision's Ultra Series Face Recognition Terminals. These premium devices 
+            Experience unmatched performance with Hikvision&apos;s Ultra Series Face Recognition Terminals. These premium devices 
             offer exceptional recognition accuracy, superior speed, and advanced features like mask detection and anti-spoofing 
             technology. Ideal for high-security environments, critical infrastructure, and enterprise applications requiring 
             the highest level of access control.

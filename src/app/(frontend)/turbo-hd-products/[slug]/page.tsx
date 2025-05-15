@@ -170,7 +170,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   }
   
   return {
-    title: `${product.title} | Hikvision UAE`, // Updated to include "UAE"
+    title: `${product.title} | Hikvision UAE`,
     description: product.meta?.description || product.description || '',
   };
 }

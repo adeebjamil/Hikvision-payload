@@ -1,5 +1,13 @@
 'use client'
-import { Header } from '@/payload-types'
+// import { Header } from '@/payload-types'
+// Define Header type here if not available from module
+type Header = {
+  navItems?: Array<{
+    link?: {
+      label?: string
+    }
+  }>
+}
 import { RowLabelProps, useRowLabel } from '@payloadcms/ui'
 
 export const RowLabel: React.FC<RowLabelProps> = (props) => {

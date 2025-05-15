@@ -20,7 +20,7 @@ interface Product {
 
 export const metadata = {
   title: 'Value Series Access Control Readers | Hikvision UAE',
-  description: 'Cost-effective access control readers offering essential functionality for standard security applications',
+  description: 'Cost-effective access control readers with essential functionality for standard security applications',
 };
 
 async function fetchReadersValueSeriesProducts() {
@@ -88,10 +88,10 @@ export default async function ReadersValueSeriesPage() {
             <h1 className="text-3xl font-bold">Value Series Access Control Readers</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Explore Hikvision's Value Series Access Control Readers, offering cost-effective solutions without 
-            compromising on essential security features. These reliable readers provide standard card reading 
-            capabilities, straightforward installation, and compatibility with common access control systems. 
-            Ideal for small businesses, residential buildings, and basic security applications.
+            Explore Hikvision&apos;s Value Series Access Control Readers, offering cost-effective solutions 
+            with reliable performance. These readers provide essential ID verification features with 
+            straightforward installation and operation, ideal for small businesses, residential buildings, 
+            and standard security applications.
           </p>
         </div>
         

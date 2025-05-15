@@ -88,7 +88,7 @@ export default async function TurboHDColorVuPage() {
             <h1 className="text-3xl font-bold">Turbo HD Cameras with ColorVu</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Experience exceptional clarity in darkness with Hikvision's Turbo HD Cameras featuring ColorVu technology. 
+            Experience exceptional clarity in darkness with Hikvision&apos;s Turbo HD Cameras featuring ColorVu technology. 
             These advanced cameras deliver vibrant, full-color images even in extremely low-light conditions, 
             ensuring you never miss critical details regardless of lighting challenges.
           </p>

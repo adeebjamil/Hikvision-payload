@@ -88,7 +88,7 @@ export default async function DVRBackendSeriesPage() {
             <h1 className="text-3xl font-bold">Backend Series DVRs</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Explore Hikvision's Backend Series DVRs, designed for enterprise storage and management of surveillance footage.
+            Explore Hikvision&apos;s Backend Series DVRs, designed for enterprise storage and management of surveillance footage.
             These high-capacity digital video recorders offer advanced features like redundant recording, RAID configurations,
             and centralized management for mission-critical surveillance systems.
           </p>

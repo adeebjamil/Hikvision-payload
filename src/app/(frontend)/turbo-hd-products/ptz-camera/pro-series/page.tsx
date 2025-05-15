@@ -88,7 +88,7 @@ export default async function PTZProSeriesPage() {
             <h1 className="text-3xl font-bold">Pro Series PTZ Cameras</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's Pro Series PTZ cameras offering professional-grade pan, tilt, and zoom capabilities.
+            Discover Hikvision&apos;s Pro Series PTZ cameras offering professional-grade pan, tilt, and zoom capabilities.
             These versatile cameras provide exceptional optical zoom, precise positioning control, and rapid response
             for comprehensive surveillance of large areas and tracking of moving subjects.
           </p>

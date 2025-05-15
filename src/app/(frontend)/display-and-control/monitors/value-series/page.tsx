@@ -20,7 +20,7 @@ interface Product {
 
 export const metadata = {
   title: 'Value Series Monitors | Hikvision UAE',
-  description: 'Cost-effective security monitors with reliable performance for standard surveillance applications',
+  description: 'Cost-effective display monitors with essential features for standard surveillance and security applications',
 };
 
 async function fetchMonitorsValueSeriesProducts() {
@@ -71,7 +71,7 @@ async function fetchMonitorsValueSeriesProducts() {
     
     return products;
   } catch (error) {
-    console.error('Error fetching Monitor Value Series products:', error);
+    console.error('Error fetching Monitors Value Series products:', error);
     return [];
   }
 }
@@ -88,10 +88,11 @@ export default async function MonitorsValueSeriesPage() {
             <h1 className="text-3xl font-bold">Value Series Monitors</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Explore Hikvision's Value Series Monitors, offering cost-effective display solutions for security monitoring.
-            These reliable monitors provide essential functionality with good image quality and durable construction,
-            making them ideal for small businesses, retail environments, and standard surveillance setups where 
-            budget-friendly solutions are required without compromising on reliability.
+            Explore Hikvision&apos;s Value Series Monitors, offering cost-effective display solutions for standard 
+            surveillance and security applications. These reliable monitors provide good image quality and essential 
+            features at an accessible price point. With durable construction and consistent performance, they&apos;re 
+            an excellent choice for small businesses, residential security systems, and basic monitoring setups 
+            where budget considerations are important without compromising on core functionality.
           </p>
         </div>
         

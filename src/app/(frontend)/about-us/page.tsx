@@ -1,8 +1,8 @@
 "use client"
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Check, MapPin, Shield, Clock, Users, ChevronRight, ChevronLeft } from 'lucide-react'
+import { Check, MapPin, Shield, Clock, Users } from 'lucide-react'
 
 export default function AboutUsPage() {
   // Carousel state
@@ -103,7 +103,7 @@ export default function AboutUsPage() {
               {/* Left column content */}
               <div className="prose prose-lg max-w-none mb-10">
                 <p className="text-gray-700 leading-relaxed">
-                  Established in Dubai, we bring Hikvision's world-renowned security and surveillance solutions to the UAE market. With years of experience in the security industry, we've grown to become a leading distributor and integrator of Hikvision's advanced technology products.
+                  Established in Dubai, we bring Hikvision&apos;s world-renowned security and surveillance solutions to the UAE market. With years of experience in the security industry, we&apos;ve grown to become a leading distributor and integrator of Hikvision&apos;s advanced technology products.
                 </p>
                 <p className="text-gray-700 leading-relaxed">
                   We combine global technology leadership with local expertise to deliver tailored security solutions for businesses, government agencies, and residential customers throughout the UAE. Our team of certified professionals ensures that every installation meets the highest standards of quality and reliability.
@@ -218,7 +218,7 @@ export default function AboutUsPage() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Customer Focus</h3>
               <p className="text-gray-600">
-                We prioritize our customers' needs, providing personalized solutions and exceptional support to ensure their complete satisfaction.
+                We prioritize our customers&apos; needs, providing personalized solutions and exceptional support to ensure their complete satisfaction.
               </p>
             </div>
           </div>

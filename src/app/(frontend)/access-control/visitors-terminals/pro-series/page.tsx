@@ -88,7 +88,7 @@ export default async function VisitorTerminalProSeriesPage() {
             <h1 className="text-3xl font-bold">Pro Series Visitor Terminals</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Elevate your visitor management with Hikvision's Pro Series Visitor Terminals. These advanced terminals 
+            Elevate your visitor management with Hikvision&apos;s Pro Series Visitor Terminals. These advanced terminals 
             streamline guest registration, identity verification, and access credentialing with features like face recognition,
             ID scanning, and integration with access control systems. Ideal for professional reception areas, lobbies, 
             and security checkpoints requiring efficient visitor processing.

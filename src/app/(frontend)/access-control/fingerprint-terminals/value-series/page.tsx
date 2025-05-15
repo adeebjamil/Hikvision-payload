@@ -88,10 +88,9 @@ export default async function FingerprintValueSeriesPage() {
             <h1 className="text-3xl font-bold">Value Series Fingerprint Terminals</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Explore Hikvision's Value Series Fingerprint Terminals, offering affordable biometric access control 
-            solutions with reliable performance. These cost-effective terminals provide essential fingerprint recognition 
-            features with straightforward installation, making secure access control accessible for small businesses 
-            and standard applications.
+            Explore Hikvision&apos;s Value Series Fingerprint Terminals, offering cost-effective biometric access control 
+            solutions with reliable performance. These terminals provide essential fingerprint recognition features for 
+            small businesses, residential buildings, and standard office environments where basic biometric security is needed.
           </p>
         </div>
         

@@ -88,10 +88,10 @@ export default async function LCDVideoWallsProSeriesPage() {
             <h1 className="text-3xl font-bold">Pro Series LCD Video Walls</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's Pro Series LCD Video Walls, engineered for professional command and control centers.
+            Discover Hikvision&apos;s Pro Series LCD Video Walls, engineered for professional command and control centers.
             These high-performance display solutions feature ultra-narrow bezels for nearly seamless viewing experiences,
             superior color accuracy, and 24/7 operation capability. With advanced image processing technology and
-            flexible configuration options, they're ideal for security monitoring centers, traffic management facilities,
+            flexible configuration options, they&apos;re ideal for security monitoring centers, traffic management facilities,
             and other mission-critical environments requiring expansive, high-resolution visual displays.
           </p>
         </div>

@@ -87,7 +87,7 @@ export default async function EDVRPage() {
             <h1 className="text-3xl font-bold">eDVR Series</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's eDVR Series, featuring embedded digital video recorders in a compact form factor. These space-efficient recorders deliver reliable performance for residential and small business applications, with simplified installation and operation.
+            Discover Hikvision&apos;s eDVR Series, featuring embedded digital video recorders in a compact form factor. These space-efficient recorders deliver reliable performance for residential and small business applications, with simplified installation and operation.
           </p>
         </div>
         

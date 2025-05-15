@@ -87,7 +87,7 @@ export default async function ValueSeriesDVRPage() {
             <h1 className="text-3xl font-bold">Value Series DVRs</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Explore Hikvision's Value Series DVRs, offering cost-effective recording solutions without compromising reliability. These digital video recorders provide essential features for small to medium installations, making them perfect for businesses looking for quality surveillance on a budget.
+            Explore Hikvision&apos;s Value Series DVRs, offering cost-effective recording solutions without compromising reliability. These digital video recorders provide essential features for small to medium installations, making them perfect for businesses looking for quality surveillance on a budget.
           </p>
         </div>
         

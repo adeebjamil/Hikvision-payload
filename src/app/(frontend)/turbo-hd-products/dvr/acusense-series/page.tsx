@@ -87,7 +87,7 @@ export default async function AcuSenseDVRPage() {
             <h1 className="text-3xl font-bold">AcuSense Series DVRs</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Experience intelligent surveillance with Hikvision's AcuSense Series DVRs. Powered by deep learning algorithms, these recorders can distinguish between humans, vehicles, and other moving objects, dramatically reducing false alarms and enabling more efficient security monitoring.
+            Experience intelligent surveillance with Hikvision&apos;s AcuSense Series DVRs. Powered by deep learning algorithms, these recorders can distinguish between humans, vehicles, and other moving objects, dramatically reducing false alarms and enabling more efficient security monitoring.
           </p>
         </div>
         

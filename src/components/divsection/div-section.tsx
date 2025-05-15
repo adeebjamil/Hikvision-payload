@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+
 export default function Divsection() {
   const fadeIn = {
     initial: { opacity: 0, y: 20 },

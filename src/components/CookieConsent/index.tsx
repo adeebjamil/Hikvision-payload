@@ -83,9 +83,3 @@ export default function CookieConsent() {
     </div>
   )
 }
-
-
-
-// About page-tsx
-
-

@@ -6,7 +6,7 @@ export default function NotFound() {
       <div className="text-center px-4">
         <h1 className="text-4xl font-bold text-red-600 mb-4">Category Not Found</h1>
         <p className="text-xl text-gray-600 mb-8">
-          We couldn't find the Turbo HD product category you're looking for.
+          We couldn&apos;t find the Turbo HD product category you&apos;re looking for.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Link 

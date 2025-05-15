@@ -1,15 +1,15 @@
-import { getPayload } from 'payload'
-import configPromise from '@payload-config'
-import { PageRange } from '@/components/PageRange'
-import { CollectionArchive } from '@/components/CollectionArchive'
-import { Pagination } from '@/components/Pagination'
+import { getPayload } from 'payload';
+import configPromise from '@/payload.config';
+import { PageRange } from '@/components/PageRange';
+import { CollectionArchive } from '@/components/CollectionArchive';
+import { Pagination } from '@/components/Pagination';
 
 type Media = {
   url: string
   alt?: string
 }
 
-export default async function prodcuts() {
+export default async function products() {
   const payload = await getPayload({ config: configPromise })
 
   const products = await payload.find({

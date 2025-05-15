@@ -1,34 +1,41 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
-import Link from 'next/link'
-import React from 'react'
+'use client'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import React, { useState, useEffect } from 'react'
+import { useDebounce } from '@/utilities/useDebounce'
+import { useRouter } from 'next/navigation'
 
-import type { Footer } from '@/payload-types'
+export const Search: React.FC = () => {
+  const [value, setValue] = useState('')
+  const router = useRouter()
 
-import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
-import { CMSLink } from '@/components/Link'
-import { Logo } from '@/components/Logo/Logo'
+  const debouncedValue = useDebounce(value)
 
-export async function Footer() {
-  const footerData: Footer = await getCachedGlobal('footer', 1)()
-
-  const navItems = footerData?.navItems || []
+  useEffect(() => {
+    router.push(`/search${debouncedValue ? `?q=${debouncedValue}` : ''}`)
+  }, [debouncedValue, router])
 
   return (
-    <footer className="mt-auto border-t border-border bg-black dark:bg-card text-white">
-      <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
-        <Link className="flex items-center" href="/">
-          <Logo />
-        </Link>
-
-        <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
-          <ThemeSelector />
-          <nav className="flex flex-col md:flex-row gap-4">
-            {navItems.map(({ link }, i) => {
-              return <CMSLink className="text-white" key={i} {...link} />
-            })}
-          </nav>
-        </div>
-      </div>
-    </footer>
+    <div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+        }}
+      >
+        <Label htmlFor="search" className="sr-only">
+          Search
+        </Label>
+        <Input
+          id="search"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setValue(event.target.value)
+          }}
+          placeholder="Search"
+        />
+        <button type="submit" className="sr-only">
+          submit
+        </button>
+      </form>
+    </div>
   )
 }

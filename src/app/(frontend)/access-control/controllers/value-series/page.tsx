@@ -19,11 +19,11 @@ interface Product {
 }
 
 export const metadata = {
-  title: 'Value Series Access Control Controllers | Hikvision UAE',
-  description: 'Cost-effective access control controllers offering essential security features for small to medium businesses',
+  title: 'Value Series Controllers | Hikvision UAE',
+  description: 'Cost-effective access control controllers for small to medium-sized installations with essential features',
 };
 
-async function fetchAccessControllerValueSeriesProducts() {
+async function fetchControllerValueSeriesProducts() {
   try {
     const payload = await getPayload({ config: configPromise });
     
@@ -40,7 +40,7 @@ async function fetchAccessControllerValueSeriesProducts() {
           },
           {
             productType: {
-              equals: 'access-controllers',
+              equals: 'controllers',
             },
           },
           {
@@ -71,13 +71,13 @@ async function fetchAccessControllerValueSeriesProducts() {
     
     return products;
   } catch (error) {
-    console.error('Error fetching Access Control Value Series products:', error);
+    console.error('Error fetching Controller Value Series products:', error);
     return [];
   }
 }
 
-export default async function AccessControlValueSeriesPage() {
-  const products = await fetchAccessControllerValueSeriesProducts();
+export default async function ControllersValueSeriesPage() {
+  const products = await fetchControllerValueSeriesProducts();
   
   return (
     <div className="bg-white text-black py-12">
@@ -85,12 +85,13 @@ export default async function AccessControlValueSeriesPage() {
         <div className="mb-8">
           <div className="flex items-center mb-4">
             <div className="w-1.5 h-8 bg-red-600 mr-3"></div>
-            <h1 className="text-3xl font-bold">Value Series Access Control Controllers</h1>
+            <h1 className="text-3xl font-bold">Value Series Controllers</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's Value Series access control controllers, providing cost-effective security solutions for 
-            small to medium businesses. These reliable controllers offer essential access management features, straightforward 
-            installation, and easy operation, making professional access control affordable for businesses of all sizes.
+            Explore Hikvision&apos;s Value Series Controllers, providing reliable access control solutions 
+            at an affordable price point. These controllers deliver fundamental security functionality with 
+            simple setup and operation, perfect for small businesses, retail locations, and basic access 
+            management needs.
           </p>
         </div>
         

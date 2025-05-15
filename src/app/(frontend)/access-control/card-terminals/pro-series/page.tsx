@@ -88,7 +88,7 @@ export default async function CardTerminalsProSeriesPage() {
             <h1 className="text-3xl font-bold">Pro Series Card Terminals</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's Pro Series Card Terminals, designed for professional security installations. 
+            Discover Hikvision&apos;s Pro Series Card Terminals, designed for professional security installations. 
             These advanced card readers offer enhanced encryption, multi-format compatibility, and seamless 
             integration with enterprise access control systems. Ideal for corporate environments, government 
             facilities, and locations requiring sophisticated access management.

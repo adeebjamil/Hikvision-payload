@@ -118,7 +118,7 @@ async function getProductBySlug(slug: string): Promise<ProductDetail | null> {
     // Process product images
     const processedProductImages = product.productImages?.map(item => ({
       image: {
-        url: typeof item.image === 'string' 
+        url: typeof item.image === 'string'
           ? item.image 
           : item.image?.url || '',
       },

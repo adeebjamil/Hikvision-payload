@@ -87,7 +87,7 @@ export default async function UltraSeriesDVRPage() {
             <h1 className="text-3xl font-bold">Ultra Series DVRs</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's Ultra Series DVRs, our premium line of digital video recorders designed for demanding security applications. Featuring advanced recording capabilities, enhanced analytics, and exceptional performance, these DVRs deliver superior results for large-scale and high-security installations.
+            Discover Hikvision&apos;s Ultra Series DVRs, our premium line of digital video recorders designed for demanding security applications. Featuring advanced recording capabilities, enhanced analytics, and exceptional performance, these DVRs deliver superior results for large-scale and high-security installations.
           </p>
         </div>
         

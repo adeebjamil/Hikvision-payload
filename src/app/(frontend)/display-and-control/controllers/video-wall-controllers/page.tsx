@@ -88,7 +88,7 @@ export default async function VideoWallControllersPage() {
             <h1 className="text-3xl font-bold">Video Wall Controllers</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's advanced Video Wall Controllers, designed for professional command centers 
+            Discover Hikvision&apos;s advanced Video Wall Controllers, designed for professional command centers 
             and surveillance monitoring stations. These powerful controllers enable seamless management of 
             multiple video feeds across large display arrays with flexible layout configuration, real-time 
             switching, and enhanced visualization capabilities. Perfect for security operations centers, 

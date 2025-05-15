@@ -1,30 +1,27 @@
 "use client"
 import React, { useState, ReactNode, ReactElement } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
+
 import { MapPin, Phone, Mail, Clock, Send, Check, Loader2, ExternalLink, ArrowRight } from 'lucide-react'
 import { Toaster, toast } from 'react-hot-toast'
 
-// Define interface for FlipCard props
+// Define interface for FlipCard props with specific type instead of any
 interface FlipCardProps {
-  icon: ReactElement<any>;
+  icon: ReactElement<React.SVGProps<SVGSVGElement>>; // Replace 'any' with specific SVG type
   title: string;
   frontContent: ReactNode;
   backContent: ReactNode;
   iconBgColor?: string;
   iconColor?: string;
-  accentColor?: string;
 }
 
-// FlipCard Component with proper TypeScript types
+// FlipCard Component with proper TypeScript types - removed unused accentColor
 const FlipCard = ({ 
   icon, 
   title, 
   frontContent, 
   backContent, 
   iconBgColor = "bg-red-50",
-  iconColor = "text-red-600",
-  accentColor = "border-red-200"
+  iconColor = "text-red-600"
 }: FlipCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
   
@@ -367,7 +364,7 @@ export default function ContactUsPage() {
               {/* Form */}
               <div className="p-8 md:p-12">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">Send Us a Message</h2>
-                <p className="text-gray-600 mb-8">Fill out the form below and we'll get back to you as soon as possible.</p>
+                <p className="text-gray-600 mb-8">Fill out the form below and we&apos;ll get back to you as soon as possible.</p>
                 
                 {/* Department Selector */}
                 <div className="mb-8">

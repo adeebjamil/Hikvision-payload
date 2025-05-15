@@ -88,7 +88,7 @@ export default async function TurboHDValueSeriesPage() {
             <h1 className="text-3xl font-bold">Value Series Turbo HD Cameras</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Explore Hikvision's Value Series Turbo HD cameras combining reliable performance with cost efficiency. 
+            Explore Hikvision&apos;s Value Series Turbo HD cameras combining reliable performance with cost efficiency. 
             These cameras deliver high-definition video over coaxial infrastructure, making them perfect for upgrading 
             existing analog systems with minimal investment.
           </p>

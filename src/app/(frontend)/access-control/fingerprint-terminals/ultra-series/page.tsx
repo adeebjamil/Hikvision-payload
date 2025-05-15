@@ -20,7 +20,7 @@ interface Product {
 
 export const metadata = {
   title: 'Ultra Series Fingerprint Terminals | Hikvision UAE',
-  description: 'Premium fingerprint recognition terminals with superior accuracy and advanced features for high-security environments',
+  description: 'Premium fingerprint recognition terminals with cutting-edge technology for high-security applications',
 };
 
 async function fetchFingerprintUltraSeriesProducts() {
@@ -88,10 +88,10 @@ export default async function FingerprintUltraSeriesPage() {
             <h1 className="text-3xl font-bold">Ultra Series Fingerprint Terminals</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Experience unmatched security with Hikvision's Ultra Series Fingerprint Terminals. These premium biometric 
-            devices feature superior fingerprint recognition algorithms, exceptional accuracy in all conditions, and 
-            advanced anti-spoofing technology. Designed for high-security environments, government facilities, and 
-            enterprise applications requiring the highest level of access control.
+            Experience premium biometric security with Hikvision&apos;s Ultra Series Fingerprint Terminals. 
+            These state-of-the-art devices offer exceptional fingerprint recognition accuracy, superior processing 
+            speeds, and advanced anti-spoofing technology. Designed for high-security environments, critical 
+            infrastructure, and enterprise applications requiring the most reliable fingerprint authentication.
           </p>
         </div>
         

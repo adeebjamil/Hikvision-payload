@@ -1,8 +1,8 @@
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
-import type { Media, Product } from '@/payload-types'
-import { draftMode } from 'next/headers'
-import { Metadata } from 'next'
+import configPromise from '@/payload.config';
+import { getPayload } from 'payload';
+import type { Media, Product } from '@/payload-types';
+import { draftMode } from 'next/headers';
+import { Metadata } from 'next';
 
 export async function generateMetadata({
   params,

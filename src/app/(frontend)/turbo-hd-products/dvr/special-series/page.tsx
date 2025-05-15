@@ -87,7 +87,7 @@ export default async function SpecialSeriesDVRPage() {
             <h1 className="text-3xl font-bold">Special Series DVRs</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Explore Hikvision's Special Series DVRs, designed for unique applications and specific industry requirements. These specialized digital video recorders offer tailored features to address particular surveillance challenges, including mobile applications, covert operations, and industry-specific compliance needs.
+            Explore Hikvision&apos;s Special Series DVRs, designed for unique applications and specific industry requirements. These specialized digital video recorders offer tailored features to address particular surveillance challenges, including mobile applications, covert operations, and industry-specific compliance needs.
           </p>
         </div>
         

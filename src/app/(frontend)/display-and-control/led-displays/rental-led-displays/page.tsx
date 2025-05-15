@@ -88,10 +88,10 @@ export default async function RentalLEDDisplaysPage() {
             <h1 className="text-3xl font-bold">Rental LED Displays</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's Rental LED Display solutions, specially designed for temporary installations 
+            Discover Hikvision&apos;s Rental LED Display solutions, specially designed for temporary installations 
             and event applications. These highly portable, modular LED panels feature tool-free assembly, 
             quick-lock systems, and robust construction for frequent transport. With fast setup and teardown 
-            times, excellent visual performance, and adaptable configurations, they're perfect for concerts, 
+            times, excellent visual performance, and adaptable configurations, they&apos;re perfect for concerts, 
             exhibitions, conferences, and other temporary events requiring high-impact visual displays.
           </p>
         </div>

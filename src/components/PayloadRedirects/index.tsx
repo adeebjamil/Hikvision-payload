@@ -1,3 +1,4 @@
+
 import type React from 'react'
 import type { Product } from '@/payload-types'
 
@@ -28,11 +29,9 @@ export const PayloadRedirects: React.FC<Props> = async ({ disableNotFound, url }
       const id = redirectItem.to?.reference?.value
 
       const document = (await getCachedDocument(collection, id)()) as Product
-      redirectUrl = `${redirectItem.to?.reference?.relationTo !== 'categories' ? `/${redirectItem.to?.reference?.relationTo}` : ''}/${
-        document?.slug
-      }`
+      redirectUrl = `${redirectItem.to?.reference?.relationTo && redirectItem.to?.reference?.relationTo !== ('categories' as typeof redirectItem.to.reference.relationTo) ? `/${redirectItem.to?.reference?.relationTo}` : ''}/${document?.slug}`
     } else {
-      redirectUrl = `${redirectItem.to?.reference?.relationTo !== 'categories' ? `/${redirectItem.to?.reference?.relationTo}` : ''}/${
+      redirectUrl = `${(redirectItem.to?.reference?.relationTo as string) !== 'categories' ? `/${redirectItem.to?.reference?.relationTo}` : ''}/${
         typeof redirectItem.to?.reference?.value === 'object'
           ? redirectItem.to?.reference?.value?.slug
           : ''

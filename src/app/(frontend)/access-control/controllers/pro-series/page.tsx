@@ -19,11 +19,11 @@ interface Product {
 }
 
 export const metadata = {
-  title: 'Pro Series Access Control Controllers | Hikvision UAE',
-  description: 'Professional-grade access control controllers with advanced security features for enterprise facilities',
+  title: 'Pro Series Controllers | Hikvision UAE',
+  description: 'Advanced access control system controllers with enterprise-grade functionality and robust security features',
 };
 
-async function fetchAccessControllerProSeriesProducts() {
+async function fetchControllerProSeriesProducts() {
   try {
     const payload = await getPayload({ config: configPromise });
     
@@ -40,7 +40,7 @@ async function fetchAccessControllerProSeriesProducts() {
           },
           {
             productType: {
-              equals: 'access-controllers',
+              equals: 'controllers',
             },
           },
           {
@@ -71,13 +71,13 @@ async function fetchAccessControllerProSeriesProducts() {
     
     return products;
   } catch (error) {
-    console.error('Error fetching Access Control Pro Series products:', error);
+    console.error('Error fetching Controller Pro Series products:', error);
     return [];
   }
 }
 
-export default async function AccessControlProSeriesPage() {
-  const products = await fetchAccessControllerProSeriesProducts();
+export default async function ControllersProSeriesPage() {
+  const products = await fetchControllerProSeriesProducts();
   
   return (
     <div className="bg-white text-black py-12">
@@ -85,12 +85,12 @@ export default async function AccessControlProSeriesPage() {
         <div className="mb-8">
           <div className="flex items-center mb-4">
             <div className="w-1.5 h-8 bg-red-600 mr-3"></div>
-            <h1 className="text-3xl font-bold">Pro Series Access Control Controllers</h1>
+            <h1 className="text-3xl font-bold">Pro Series Controllers</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision's Pro Series access control controllers, designed for enterprise-level security management.
-            These advanced controllers offer centralized management, high capacity user databases, and support for multiple
-            authentication methods, delivering comprehensive security for facilities of all sizes.
+            Discover Hikvision&apos;s Pro Series Controllers, designed for comprehensive access control in demanding environments. 
+            These advanced controllers support multiple door configurations, extensive user databases, and sophisticated security protocols, 
+            ideal for enterprise installations and facilities requiring high security and operational flexibility.
           </p>
         </div>
         

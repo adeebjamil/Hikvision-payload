@@ -88,7 +88,7 @@ export default async function FaceRecognitionTurnstileModulesPage() {
             <h1 className="text-3xl font-bold">Face Recognition Modules for Turnstile</h1>
           </div>
           <p className="text-gray-400 max-w-3xl">
-            Streamline access in high-traffic areas with Hikvision's Face Recognition Modules for Turnstiles. 
+            Streamline access in high-traffic areas with Hikvision&apos;s Face Recognition Modules for Turnstiles. 
             These specialized modules are designed to integrate seamlessly with turnstiles and gates, providing 
             touchless, rapid identification for efficient crowd management. Ideal for transportation hubs, stadiums, 
             corporate lobbies, and other environments where quick, secure access is essential.
