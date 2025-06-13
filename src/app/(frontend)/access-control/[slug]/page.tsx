@@ -1,12 +1,12 @@
 import React from 'react';
 import { getPayload } from 'payload';
-import configPromise from '@/payload.config';
+import configPromise from '../../../../payload.config';
+import ProductGallery from '../../../../components/ProductGallery';
+import ProductFeatureIcons from '../../../../components/ProductFeatureIcons';
+import ProductSpecifications from '../../../../components/ProductSpecifications';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import ProductGallery from '@/components/ProductGallery';
-import ProductFeatureIcons from '@/components/ProductFeatureIcons';
-import ProductSpecifications from '@/components/ProductSpecifications';
 
 // Define interfaces
 interface SpecificationItem {
@@ -113,41 +113,10 @@ async function getProductBySlug(slug: string): Promise<ProductDetail | null> {
       return null;
     }
     
-    // Transform product to payload product
-    const transformProductToPayloadProduct = (product: any): PayloadProduct => {
-      return {
-        ...product,
-        details: {
-          ...product.details,
-          specifications: product.details.specifications.map(category => ({
-            ...category,
-            specs: category.specs?.map(spec => ({
-              ...spec,
-              // Convert rich text object to string
-              value: typeof spec.value === 'string' 
-                ? spec.value 
-                : extractTextFromRichText(spec.value)
-            })) || []
-          }))
-        }
-      };
-    };
-
-    // Helper function to extract text from rich text structure
-    const extractTextFromRichText = (richTextObj: any): string => {
-      if (!richTextObj?.root?.children) return '';
-      
-      return richTextObj.root.children
-        .map((child: any) => child.text || '')
-        .join(' ')
-        .trim();
-    };
-
-    // Use the transformer instead of casting
-    const payloadProduct = transformProductToPayloadProduct(result.docs[0]);
+    const product = result.docs[0] as unknown as PayloadProduct;
     
     // Process product images
-    const processedProductImages = payloadProduct.productImages?.map(item => ({
+    const processedProductImages = product.productImages?.map(item => ({
       image: {
         url: typeof item.image === 'string'
           ? item.image 
@@ -157,7 +126,7 @@ async function getProductBySlug(slug: string): Promise<ProductDetail | null> {
     })) || [];
     
     // Process feature icons
-    const processedFeatureIcons = payloadProduct.featureIcons?.map(icon => ({
+    const processedFeatureIcons = product.featureIcons?.map(icon => ({
       iconType: icon.iconType,
       label: icon.label || undefined,
       customIcon: icon.customIcon ? (
@@ -169,27 +138,36 @@ async function getProductBySlug(slug: string): Promise<ProductDetail | null> {
       ) : undefined
     })) || [];
     
+    // Process specifications to handle rich text values
+    const processedSpecifications = product.details?.specifications?.map(category => ({
+      category: category.category,
+      specs: category.specs?.map(spec => ({
+        name: spec.name,
+        value: typeof spec.value === 'string' ? spec.value : JSON.stringify(spec.value)
+      })) || []
+    })) || [];
+    
     return {
-      id: payloadProduct.id,
-      title: payloadProduct.title,
-      description: payloadProduct.shortDescription || payloadProduct.meta?.description || '',
-      heroImage: typeof payloadProduct.heroImage === 'string'
-        ? { url: payloadProduct.heroImage }
-        : payloadProduct.heroImage && typeof payloadProduct.heroImage === 'object' && 'url' in payloadProduct.heroImage && typeof payloadProduct.heroImage.url === 'string'
-          ? { url: payloadProduct.heroImage.url }
+      id: product.id,
+      title: product.title,
+      description: product.shortDescription || product.meta?.description || '',
+      heroImage: typeof product.heroImage === 'string'
+        ? { url: product.heroImage }
+        : product.heroImage && typeof product.heroImage === 'object' && 'url' in product.heroImage
+          ? { url: product.heroImage.url }
           : undefined,
       productImages: processedProductImages,
-      slug: payloadProduct.slug,
-      meta: payloadProduct.meta ? {
-        description: payloadProduct.meta.description || undefined
+      slug: product.slug,
+      meta: product.meta ? {
+        description: product.meta.description || undefined
       } : undefined,
       details: {
-        features: payloadProduct.details?.features || [],
-        specifications: payloadProduct.details?.specifications || [],
+        features: product.details?.features || [],
+        specifications: processedSpecifications,
       },
       featureIcons: processedFeatureIcons,
-      isNew: payloadProduct.isNew || false,
-      subtitle: payloadProduct.subtitle || '',
+      isNew: product.isNew || false,
+      subtitle: product.subtitle || '',
     };
   } catch (error) {
     console.error('Error fetching product by slug:', error);
