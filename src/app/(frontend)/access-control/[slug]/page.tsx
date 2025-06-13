@@ -145,7 +145,7 @@ async function getProductBySlug(slug: string): Promise<ProductDetail | null> {
         name: spec.name,
         value: typeof spec.value === 'string' ? spec.value : JSON.stringify(spec.value)
       })) || []
-    })) || [];
+    })).filter(category => category.specs.length > 0) || [];
     
     return {
       id: product.id,
@@ -177,8 +177,7 @@ async function getProductBySlug(slug: string): Promise<ProductDetail | null> {
 
 // Generate metadata
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const slug = params.slug;
-  const product = await getProductBySlug(slug);
+  const product = await getProductBySlug(params.slug);
   
   if (!product) {
     return {
@@ -194,17 +193,18 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 }
 
 export default async function AccessControlProductDetailPage({ params }: { params: { slug: string } }) {
-  const resolvedParams = params ? await Promise.resolve(params) : { slug: '' };
-  const product = await getProductBySlug(resolvedParams.slug);
+  const product = await getProductBySlug(params.slug);
   
   if (!product) {
     notFound();
   }
   
   // Combine hero image with product images
-  const allImages = [
-    { image: { url: product.heroImage?.url || '' }, alt: product.title }
-  ];
+  const allImages = [];
+  
+  if (product.heroImage?.url) {
+    allImages.push({ image: { url: product.heroImage.url }, alt: product.title });
+  }
   
   if (product.productImages && product.productImages.length > 0) {
     allImages.push(...product.productImages);
