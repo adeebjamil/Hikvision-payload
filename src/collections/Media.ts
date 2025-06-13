@@ -11,6 +11,19 @@ export const Media: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'cloudinaryUrl',
+      type: 'text',
+      admin: {
+        hidden: true,
+      },
+    },
   ],
-  upload: true,
+  upload: {
+    // For Vercel, disable local storage
+    staticDir: process.env.NODE_ENV === 'production' ? undefined : 'media',
+    mimeTypes: ['image/*'],
+    
+    // We'll add Cloudinary upload logic via API routes
+  },
 }
