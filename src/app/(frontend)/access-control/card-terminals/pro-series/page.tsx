@@ -80,22 +80,20 @@ export default async function CardTerminalsProSeriesPage() {
   const products = await fetchCardTerminalsProSeriesProducts();
   
   return (
-    <div className="bg-white text-black py-12">
-      <div className="container mx-auto px-4">
-        <div className="mb-8">
-          <div className="flex items-center mb-4">
-            <div className="w-1.5 h-8 bg-red-600 mr-3"></div>
-            <h1 className="text-3xl font-bold">Pro Series Card Terminals</h1>
-          </div>
-          <p className="text-gray-400 max-w-3xl">
-            Discover Hikvision&apos;s Pro Series Card Terminals, designed for professional security installations. 
-            These advanced card readers offer enhanced encryption, multi-format compatibility, and seamless 
-            integration with enterprise access control systems. Ideal for corporate environments, government 
-            facilities, and locations requiring sophisticated access management.
-          </p>
-        </div>
+    <div className="bg-white text-gray-900 min-h-screen pb-16">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-6">Pro Series Card Terminals</h1>
+        <p className="text-gray-600 mb-8">Coming soon - Professional-grade card reader terminals with advanced features for enterprise access control systems</p>
         
-        <ProductFilter products={products} />
+        <div className="bg-gray-50 p-6 rounded-lg">
+          <h2 className="text-xl font-semibold mb-4">Product Categories</h2>
+          <ul className="space-y-2">
+            <li>• Multi-format Card Readers</li>
+            <li>• Proximity Card Terminals</li>
+            <li>• Smart Card Solutions</li>
+            <li>• Biometric Integration</li>
+          </ul>
+        </div>
       </div>
     </div>
   );

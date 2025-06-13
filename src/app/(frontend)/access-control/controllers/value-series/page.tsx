@@ -20,7 +20,7 @@ interface Product {
 
 export const metadata = {
   title: 'Value Series Controllers | Hikvision UAE',
-  description: 'Cost-effective access control controllers for small to medium-sized installations with essential features',
+  description: 'Cost-effective value series access control controllers',
 };
 
 async function fetchControllerValueSeriesProducts() {
@@ -80,22 +80,20 @@ export default async function ControllersValueSeriesPage() {
   const products = await fetchControllerValueSeriesProducts();
   
   return (
-    <div className="bg-white text-black py-12">
-      <div className="container mx-auto px-4">
-        <div className="mb-8">
-          <div className="flex items-center mb-4">
-            <div className="w-1.5 h-8 bg-red-600 mr-3"></div>
-            <h1 className="text-3xl font-bold">Value Series Controllers</h1>
-          </div>
-          <p className="text-gray-400 max-w-3xl">
-            Explore Hikvision&apos;s Value Series Controllers, providing reliable access control solutions 
-            at an affordable price point. These controllers deliver fundamental security functionality with 
-            simple setup and operation, perfect for small businesses, retail locations, and basic access 
-            management needs.
-          </p>
-        </div>
+    <div className="bg-white text-gray-900 min-h-screen pb-16">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-6">Value Series Controllers</h1>
+        <p className="text-gray-600 mb-8">Coming soon - Cost-effective value series access control controllers</p>
         
-        <ProductFilter products={products} />
+        <div className="bg-gray-50 p-6 rounded-lg">
+          <h2 className="text-xl font-semibold mb-4">Product Range</h2>
+          <ul className="space-y-2">
+            <li>• Basic door controllers</li>
+            <li>• Entry-level access control</li>
+            <li>• Budget-friendly solutions</li>
+            <li>• Essential security features</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
