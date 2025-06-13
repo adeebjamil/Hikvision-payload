@@ -113,10 +113,41 @@ async function getProductBySlug(slug: string): Promise<ProductDetail | null> {
       return null;
     }
     
-    const product = result.docs[0] as PayloadProduct;
+    // Transform product to payload product
+    const transformProductToPayloadProduct = (product: any): PayloadProduct => {
+      return {
+        ...product,
+        details: {
+          ...product.details,
+          specifications: product.details.specifications.map(category => ({
+            ...category,
+            specs: category.specs?.map(spec => ({
+              ...spec,
+              // Convert rich text object to string
+              value: typeof spec.value === 'string' 
+                ? spec.value 
+                : extractTextFromRichText(spec.value)
+            })) || []
+          }))
+        }
+      };
+    };
+
+    // Helper function to extract text from rich text structure
+    const extractTextFromRichText = (richTextObj: any): string => {
+      if (!richTextObj?.root?.children) return '';
+      
+      return richTextObj.root.children
+        .map((child: any) => child.text || '')
+        .join(' ')
+        .trim();
+    };
+
+    // Use the transformer instead of casting
+    const payloadProduct = transformProductToPayloadProduct(result.docs[0]);
     
     // Process product images
-    const processedProductImages = product.productImages?.map(item => ({
+    const processedProductImages = payloadProduct.productImages?.map(item => ({
       image: {
         url: typeof item.image === 'string'
           ? item.image 
@@ -126,7 +157,7 @@ async function getProductBySlug(slug: string): Promise<ProductDetail | null> {
     })) || [];
     
     // Process feature icons
-    const processedFeatureIcons = product.featureIcons?.map(icon => ({
+    const processedFeatureIcons = payloadProduct.featureIcons?.map(icon => ({
       iconType: icon.iconType,
       label: icon.label || undefined,
       customIcon: icon.customIcon ? (
@@ -139,26 +170,26 @@ async function getProductBySlug(slug: string): Promise<ProductDetail | null> {
     })) || [];
     
     return {
-      id: product.id,
-      title: product.title,
-      description: product.shortDescription || product.meta?.description || '',
-      heroImage: typeof product.heroImage === 'string'
-        ? { url: product.heroImage }
-        : product.heroImage && typeof product.heroImage === 'object' && 'url' in product.heroImage && typeof product.heroImage.url === 'string'
-          ? { url: product.heroImage.url }
+      id: payloadProduct.id,
+      title: payloadProduct.title,
+      description: payloadProduct.shortDescription || payloadProduct.meta?.description || '',
+      heroImage: typeof payloadProduct.heroImage === 'string'
+        ? { url: payloadProduct.heroImage }
+        : payloadProduct.heroImage && typeof payloadProduct.heroImage === 'object' && 'url' in payloadProduct.heroImage && typeof payloadProduct.heroImage.url === 'string'
+          ? { url: payloadProduct.heroImage.url }
           : undefined,
       productImages: processedProductImages,
-      slug: product.slug,
-      meta: product.meta ? {
-        description: product.meta.description || undefined
+      slug: payloadProduct.slug,
+      meta: payloadProduct.meta ? {
+        description: payloadProduct.meta.description || undefined
       } : undefined,
       details: {
-        features: product.details?.features || [],
-        specifications: product.details?.specifications || [],
+        features: payloadProduct.details?.features || [],
+        specifications: payloadProduct.details?.specifications || [],
       },
       featureIcons: processedFeatureIcons,
-      isNew: product.isNew || false,
-      subtitle: product.subtitle || '',
+      isNew: payloadProduct.isNew || false,
+      subtitle: payloadProduct.subtitle || '',
     };
   } catch (error) {
     console.error('Error fetching product by slug:', error);

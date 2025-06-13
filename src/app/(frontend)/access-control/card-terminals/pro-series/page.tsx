@@ -76,34 +76,27 @@ async function fetchCardTerminalsProSeriesProducts() {
   }
 }
 
-export default async function ProSeriesPage() {
-  try {
-    const payload = await getPayload({ config: configPromise });
-    
-    const products = await fetchCardTerminalsProSeriesProducts();
-    
-    return (
-      <div className="bg-white text-black py-12">
-        <div className="container mx-auto px-4">
-          <div className="mb-8">
-            <div className="flex items-center mb-4">
-              <div className="w-1.5 h-8 bg-red-600 mr-3"></div>
-              <h1 className="text-3xl font-bold">Pro Series Card Terminals</h1>
-            </div>
-            <p className="text-gray-400 max-w-3xl">
-              Discover Hikvision&apos;s Pro Series Card Terminals, designed for professional security installations. 
-              These advanced card readers offer enhanced encryption, multi-format compatibility, and seamless 
-              integration with enterprise access control systems. Ideal for corporate environments, government 
-              facilities, and locations requiring sophisticated access management.
-            </p>
+export default async function CardTerminalsProSeriesPage() {
+  const products = await fetchCardTerminalsProSeriesProducts();
+  
+  return (
+    <div className="bg-white text-black py-12">
+      <div className="container mx-auto px-4">
+        <div className="mb-8">
+          <div className="flex items-center mb-4">
+            <div className="w-1.5 h-8 bg-red-600 mr-3"></div>
+            <h1 className="text-3xl font-bold">Pro Series Card Terminals</h1>
           </div>
-          
-          <ProductFilter products={products} />
+          <p className="text-gray-400 max-w-3xl">
+            Discover Hikvision&apos;s Pro Series Card Terminals, designed for professional security installations. 
+            These advanced card readers offer enhanced encryption, multi-format compatibility, and seamless 
+            integration with enterprise access control systems. Ideal for corporate environments, government 
+            facilities, and locations requiring sophisticated access management.
+          </p>
         </div>
+        
+        <ProductFilter products={products} />
       </div>
-    );
-  } catch (error) {
-    console.error('Page error:', error);
-    return <div>Error loading page</div>;
-  }
+    </div>
+  );
 }
