@@ -1,8 +1,8 @@
 import React from 'react';
 import { getPayload } from 'payload';
-import configPromise from '@/payload.config';
-import { ProductFilter } from '@/components/ProductFilter';
-import type { Product as PayloadProduct } from '@/payload-types';
+import configPromise from '../../../../../payload.config';
+import { ProductFilter } from '../../../../../components/ProductFilter';
+import type { Product as PayloadProduct } from '../../../../../payload-types';
 
 // Define the expected Product type for the ProductFilter component
 interface Product {
